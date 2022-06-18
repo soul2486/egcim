@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block titre %} Depot Memoire {% endblock %}
+{% block active_depot %} active {% endblock %}
+
+{% block contenu %}
+    {% for message in messages  %}
+        {% if message.tags == 'success' %}
+            {% load static %}
+            <script src="{% static 'jquery/jquery.min.js' %}"></script>
+                <script>
+                $(document).ready(function(){
+                $("#modalAjout").modal('show')
+                });
+                </script>
+        {% else %}
+            alert("hello");  
+        {% endif %}
+    {% endfor %}
+    <script>
+        $(document).ready(function(){
+        $("#modalEnt").modal('show');
+        });
+    </script>
+    <div class="modal fade" tabindex="-1" id="modalEnt" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Modifier l'entreprise</h4>
+            <a href = "{% url 'list_entreprise' %}"><button type="button" class="btn-close"></button></a>
+            </div>
+    
+            <!-- Modal body -->
+            <form action="#" method="post">
+            {% csrf_token %}
+            <div class="modal-body text-center">
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-md-12">
+                <!-- Email input -->
+                <div class="form-outline ">
+                    <input type="text" value={{entreprises.nom_ent}} id="form8Example2" class="form-control" name="nom" required/>
+                    
+                    <label class="form-label float-start" for="{{form_parcours.parcours.id_for_label}}">Entreprise</label>
+                </div>
+                {% comment %} <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-md-12">
+                <!-- Email input -->
+                <div class="form-outline ">
+                    <input type="text" value={{entreprises.lieu}} id="form8Example2" class="form-control" name="lieu" required/>
+                    
+                    <label class="form-label float-start" for="{{form_parcours.mention.id_for_label}}">Localisation</label>
+                </div>
+                {% comment %} <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
+                </div>
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'list_entreprise' %}"><button type="button" class="btn btn-danger">Annuler</button></a>
+            <button type="submit" class="btn btn-primary">Modifier</button>
+            </div>
+        </form>
+        </div>
+        </div>
+    </div>
+    {% comment %} ajout effectuer {% endcomment %}
+    <div class="modal fade" tabindex="-1" id="modalAjout" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Ajout</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="text-center text-success mt-3">
+                <i class="far fa-check-circle fa-6x" style="color:#a5dc86;"></i>
+            </div>
+            <br>
+            <div class="mb-3">
+                Modification effectuer avec success
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'list_entreprise' %}"><button type="button" class="btn btn-success">ok</button></a>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+{% endblock %}

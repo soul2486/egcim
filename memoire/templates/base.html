@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script  scr="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js'%}"></script>  
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/sb-admin-2.min.css'%}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css'%}">
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    {% comment %} <script src="{% static 'jquery/jquery.js' %}"></script> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'font/css/all.min.css'%}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'font/css/all.min.css'%}"> {% endcomment %}
+    {% comment %} <script defer src="https://unpkg.com/alpinejs@3.7.1/dist/cdn.min.js"></script> {% endcomment %}
+    <script defer src="{% static 'assets/plugins/fontawesome/js/all.min.js'%}"></script>
+    {% block document %} {% endblock %}
+     
+    <!-- <link rel="stylesheet" href="{% static 'css/fontawesome.min.css'%}"> -->
+   
+    <!-- <link rel="stylesheet" href="{% static 'https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i'%}"> -->
+    
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
+    <script src="{% static 'font/js/all.min.js' %}"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script> {% endcomment %}
+
+    <title>{% block titre %} {% endblock %}</title>
+   
+        
+</head>
+<body class="">
+   
+    <div class="container-fluid p-1 mb-5 " id="">
+        <img class="card-img-top img-responsive opacity-90" src="{% static 'img/bibliotheque4.jpg' %}" width="100%">
+        <div class="card-img-overlay">
+            <div class="card-title">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top opacity-75 " id="navigation">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Meli-Egcim</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <!-- <div class="collapse navbar-collapse" id="mynavbar"> -->
+                        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                            <ul class="nav nav-pills justify-content-center">
+                                <li class="nav-item">
+                                    <a class="nav-link {% block active_Accueil %}{% endblock %}" href="/memoire/">Accueil</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% block active_depot %}{% endblock %}" href="{% url 'depot' %}">Depot</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a  class="nav-link  {% block active_consulter %}{% endblock %}" href="/memoire/consulter">Archive</a>
+                                    <ul class="dropdown-menu" >
+                                        <li><a class="dropdown-item" href="#">Recent</a></li>
+                                        <li><a class="dropdown-item" href="#">Tous</a></li>
+                                        {% comment %} <li><a class="dropdown-item" href="#">parcours</a></li> {% endcomment %}
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% block active_rechercher %}{% endblock %}" href="{% url 'recherche' %}">Recherche</a>
+                                </li>
+                                <a type="button" class="nav-link justify-content-end " data-toggle="tooltip" data-placement="right" title="connexion/deconnexion" href="{% url 'deconnexion' %}"><i class="fas fa-user-alt"></i></a>
+
+                            </ul>
+                        </div>
+                        <!-- </div> -->
+                </nav>
+            </div>
+            <div class="container mb-3">
+                <div class="row mt-1">
+                    <div class="col-xs">
+                    <div class="text-center card-img-overlay mt-5">
+                        <div class="container-xl logo" id="logo">
+                        <img src="{% static 'img/logo-univ-t.png' %}" class="img-responsive my-auto  me-5" id="univ" width="10%">
+                        <img src="{% static 'img/egcim.png' %}" class="img-responsive " id="egcim" width="10%"> 
+                    </div>
+                    <div class="card bg-transparent border-0 p-2 justify-content-center" id="titre">
+                        <h1 class="text-white" >Memoire Egcim</h1>
+                    </div>
+                         
+                    </div>
+                </div>
+                </div>
+                <!-- <div class="card-body mb-3">
+                <h1>Memoire en ligne de l'Egcim</h1>
+            </div> -->
+            </div>
+        </div>
+    </div>
+    {% for message in messages  %}
+        {% if messages.tags == 'success' %}
+            <script src="{% static 'jquery/jquery.min.js' %}"></script>
+            <script>
+                $(document).ready(function(){
+                  $("#myModal").modal('show');
+                  alert('bonjour');
+                    });
+            </script>
+        {% endif %}
+    {% endfor %}
+{% block contenu %}
+
+
+{% endblock %}
+
+    <script src="{% static 'assets/plugins/popper.min.js'%}"></script>
+    <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js'%}"></script> 
+    <script  scr="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    
+    <!-- Page Specific JS -->
+    <script src="{% static 'assets/js/app.js'%}"></script> 
+    <script src="{% static 'jquery/jquery.js' %}"></script>
+    {% comment %} <script>
+        $(document).ready(function(){
+        $("#modalParc").modal('show');
+        });
+    </script> {% endcomment %}
+</body>
+</html>

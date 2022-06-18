@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% block titre %} Depot Memoire {% endblock %}
+{% block active_depot %} active {% endblock %}
+
+{% block contenu %}
+    {% comment %} {% for message in messages  %}
+        {% if message.tags == 'success' %}
+            {% load static %}
+            <script src="{% static 'jquery/jquery.min.js' %}"></script>
+                <script>
+                $(document).ready(function(){
+                $("#modalAjout").modal('show')
+                });
+                </script>
+        {% else %}
+            alert("hello");  
+        {% endif %}
+    {% endfor %}
+     {% endcomment %}
+     <script>
+        $(document).ready(function(){
+        $("#modalLogin").modal('show')
+        });
+    </script>
+    {% load static %}
+    <div class="modal fade" tabindex="-1" id="modalLogin" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+            <h4 class="modal-title ">connexion</h4>
+            <a href = "{% url 'index' %}"><button type="button" class="btn-close"></button></a>
+            </div>
+            <img src="{% static 'img/egcim.png'%}" class=" pt-3 rounded mx-auto d-block" width="30%">
+            <!-- Modal body -->
+            <form action="#" method="post">
+            {% csrf_token %}
+            <div class="modal-body text-center px-3">
+            <div class="row justify-content-center">
+                <div class="col-xl-10 col-md-10">
+                <!-- Email input -->
+                <div class="form-outline ">
+                    <input type="text" id="form8Example2" class="form-control" name="username" required/>
+                    {% comment %} {{ form_ens.nom_ens }} {% endcomment %}
+                    <label class="form-label float-start" for="{{form_ens.nom_ens.id_for_label}}">UserName</label>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                
+                <div class="col-xl-10 col-md-10">
+                    <!-- Email input -->
+                    <div class="form-outline ">
+                        <input type="password" id="form8Example2" class="form-control" name="password" required/>
+                        {% comment %} {{ form_ens.prenom_ens }} {% endcomment %}
+                        <label class="form-label float-start" for="">Password</label>
+                    </div>
+                </div>
+            </div>
+                {% comment %} <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
+            </div>
+           
+            {% comment %} <div class="row justify-content-center">
+                <div class="col-xl-12 col-md-12">
+                <!-- Email input -->
+                <div class="form-outline ">
+                    <input type="text" id="form8Example2" class="form-control" name="nom" required/>
+                    {% comment %} {{ form_ens.prenom_ens }} 
+                    <label class="form-label float-start" for="">Password</label>
+                </div>
+                {% comment %} <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div> 
+                </div>
+            </div> {% endcomment %}
+            
+            </div>
+            <div class=" d-flex text-warning justify-content-center">
+                {%if messages%}
+                {% for message in messages %}
+                    {{message}}
+                {% endfor %}
+            {%endif%}
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer justify-content-center">
+            <a href = "{% url 'index' %}"><button type="button" class="btn btn-danger">Close</button></a>
+            <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+        </div>
+        </div>
+    </div>
+    {% comment %} ajout effectuer {% endcomment %}
+    <div class="modal fade" tabindex="-1" id="modalAjout" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Ajout</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="text-center text-success mt-3">
+                <i class="far fa-check-circle fa-6x" style="color:#a5dc86;"></i>
+            </div>
+            <br>
+            <div class="mb-3">
+                Ajout effectuer avec success
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'depot' %}"><button type="button" class="btn btn-success">ok</button></a>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+{% endblock %}

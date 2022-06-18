@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block contenu %}
+<main>
+  <h1>Long long long long long long header header header header header header lng lasd lewq j</h1>
+  <div class="container">
+      <div class="row">
+          <div class="col-xs-12">
+              <div id="task-list">
+                  <div id="accordion" role="tablist" aria-multiselectable="true" class="panel-group">
+
+                      <div class="panel panel-default">
+                          <div id="headingOne" role="tab" class="panel-heading"><h4 class="panel-title"><a
+                                  data-toggle="collapse" data-target="#collapseOne" href="#collapseOne"
+                                  aria-expanded="true" aria-controls="collapseOne">First list</a></h4></div>
+                          <div id="collapseOne" role="tabpanel" aria-labelledby="headingOne"
+                               class="panel-collapse collapse in">
+                              <ul class="list-group">
+                                  <li class="list-group-item">Item1</li>
+                                  <li class="list-group-item">Item2</li>
+                                  <li class="list-group-item">Item3</li>
+                              </ul>
+                          </div>
+                      </div>
+
+                      <div class="panel panel-default">
+                          <div id="headingTwo" role="tab" class="panel-heading"><h4 class="panel-title"><a
+                                  data-toggle="collapse" data-target="#collapseTwo" href="#collapseTwo"
+                                  aria-expanded="true" aria-controls="collapseTwo">Another list</a></h4></div>
+                          <div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo"
+                               class="panel-collapse collapse in">
+                              <ul class="list-group">
+                                  <li class="list-group-item">Item1</li>
+                                  <li class="list-group-item">Item2</li>
+                                  <li class="list-group-item">Item3</li>
+                              </ul>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+
+              <div id="someDiv">
+                  <div class="row">
+                      <div class="col-xs-12">
+                          <div id="dummy">Div with fixed height here</div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+  </div>
+</main>
+{% endblock %}

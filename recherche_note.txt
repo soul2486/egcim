@@ -1,0 +1,2 @@
+Heureusement, pour améliorer la précision il existe plusieurs librairies d’OCR gratuites sur Internet. La librairie Tesseract par exemple utilise son dictionnaire pour contrôler la segmentation des caractères.
+Dans le post-traitement OCR, l’algorithme de distance de Levenshtein est souvent utilisé pour maximiser davantage les résultats de l’OCR.

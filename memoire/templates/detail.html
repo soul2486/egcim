@@ -1,0 +1,102 @@
+{% extends 'consulter.html' %}
+{% load static %}
+{% block titre %} Detail Memoire {% endblock %}
+{% block contenu %}
+<script>
+    $(document).ready(function(){
+    $("#detail").modal('show')
+    });
+</script>
+<!-- Modal -->
+<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{memoires.titre}}</h5>
+        <a href="{% url 'consulter' %}"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></a>
+      </div>
+      <div class="modal-body justify-content-center">
+        <div class="row">
+          <div class="row justify-content-center">
+          <div class="col-sm-3">
+            rediger par: <h6>{{memoires.etudiant.nom}} {{memoires.etudiant.prenom}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Matricule: <h6>{{memoires.etudiant.matricule}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Parcours: <h6>{{memoires.etudiant.parcours}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Mention: <h6>{{memoires.etudiant.parcours.mention}}</h6>
+          </div>
+    
+          <hr>
+          <div class="row">
+            <div class="col-sm-3">
+              Annee academique: <h6>{{memoires.annee_academique}}</h6>
+            </div>
+            <div class="col-sm-3">
+              Date Soutenance: <h6>{{memoires.soutenance.date_sout}}</h6>
+            </div>
+            <div class="col-sm-3">
+              salle: <h6>{{memoires.soutenance.salle}}</h6>
+            </div>
+            <div class="col-sm-3">
+              Mention obtenue: <h6>{{memoires.soutenance.mention_sout}}</h6>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            President du jury: <h6>{{memoires.soutenance.jury.president.grade}} {{memoires.soutenance.jury.president}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Examinateur: <h6>{{memoires.soutenance.jury.examinateur.grade}} {{memoires.soutenance.jury.examinateur}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Encadreur_academique: <h6>{{memoires.soutenance.jury.encadreur.grade}} {{memoires.soutenance.jury.encadreur}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Encadreur Industriel: <h6>Mr/Mme {{memoires.soutenance.jury.encadreur_ind}}</h6>
+          </div>
+      </div>
+      <hr>
+        <div class="row">
+          <div class="col-sm-3">
+            Entreprise: <h6>{{memoires.etudiant.stage.entreprise.nom_ent}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Lieu: <h6>{{memoires.etudiant.stage.entreprise.lieu}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Mot cle: <h6>{{memoires.mot_cle}}</h6>
+          </div>
+          <div class="col-sm-3">
+            Mot cle: <h6>{{memoires.mot_cle}}</h6>
+          </div>
+        </div>
+        <hr>
+        <div>
+
+        </div>
+        
+      </div>
+      <div class="row justify-content-center">
+      <div class = "col-sm-12" >     
+        <h6>Resume:</h6>
+             
+              <textarea class="form-control" disabled rows="10">{{memoires.resume}}</textarea>
+      </div>
+        </div>
+      </div>
+    </div>
+      <div class="modal-footer">
+        <a href="{% url 'consulter' %}" class = "btn btn-danger">Close<a>
+          <a href="{% url 'load_doc' memoire_id=memoires.id %}"><button type="button" class="btn btn-secondary">Telecharger</button><a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

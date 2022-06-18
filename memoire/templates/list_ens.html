@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block titre %} Depot Memoire {% endblock %}
+{% block active_depot %} active {% endblock %}
+
+{% block contenu %}
+    {% for message in messages  %}
+        {% if message.tags == 'success' %}
+            {% load static %}
+            <script src="{% static 'jquery/jquery.min.js' %}"></script>
+                <script>
+                $(document).ready(function(){
+                $("#modalAjout").modal('show')
+                });
+                </script>
+        {% else %}
+            alert("hello");  
+        {% endif %}
+    {% endfor %}
+    <script>
+        $(document).ready(function(){
+        $("#modalEnt").modal('show');
+        });
+    </script>
+    <div class="modal fade" tabindex="-1" id="modalEnt" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable ">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">Enseignants</h4>
+                {% comment %} <a class="btn btn-success" href="{% url 'ajouter_entreprise' %}"><i class="fas fa-addtext-primary"></i></a> {% endcomment %}
+
+                <a href = "{% url 'depot' %}"><button type="button" class="btn-close"></button></a>
+                </div>
+        
+                <!-- Modal body -->
+           
+                <div class="modal-body p-3 m-3 justify-content-center">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prenom</th>
+                            <th scope="col">Grade</th>
+                            <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            {% for ens in enseignants %}
+                            <tr>
+                                <th scope="row">{{ent.id}}</th>
+                                <td>{{ens.nom_ens}}</td>
+                                <td>{{ens.prenom_ens}}</td>
+                                <td>{{ens.grade}}</td>
+                                <td><a href="{% url 'modif_ens' id_enseignant=ens.id %}"><i class="fas fa-edit me-2 text-primary"></i></a> <a class="" href="{% url 'delete_ens' id_enseignant=ens.id %}"><i class="fas fa-minus-circle text-danger "></i></a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                 </div>
+        
+                 <div class="modal-footer">
+                    <a href = "{% url 'depot' %}"><button type="button" class="btn btn-danger">Fermer</button></a>
+                    <a href="{% url 'ajouter_ens' %}"><button class="btn btn-primary">Ajouter</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% comment %} ajout effectuer {% endcomment %}
+    <div class="modal fade" tabindex="-1" id="modalAjout" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Ajout</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="text-center text-success mt-3">
+                <i class="far fa-check-circle fa-6x" style="color:#a5dc86;"></i>
+            </div>
+            <br>
+            <div class="mb-3">
+                Ajout effectuer avec success
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'depot' %}"><button type="button" class="btn btn-success">Ajouter</button></a>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+{% endblock %}

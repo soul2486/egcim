@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block titre %} Depot Memoire {% endblock %}
+{% block active_depot %} active {% endblock %}
+
+{% block contenu %}
+    {% for message in messages  %}
+        {% if message.tags == 'success' %}
+            {% load static %}
+            <script src="{% static 'jquery/jquery.min.js' %}"></script>
+                <script>
+                $(document).ready(function(){
+                $("#modalAjout").modal('show')
+                });
+                </script>
+        {% else %}
+            alert("hello");  
+        {% endif %}
+    {% endfor %}
+    <script>
+        $(document).ready(function(){
+        $("#modalMent").modal('show')
+        });
+    </script>
+    <div class="modal fade" tabindex="-1" id="modalMent" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Ajouter une mention</h4>
+            <a href = "{% url 'ajouter_parcours' %}"><button type="button" class="btn-close"></button></a>
+            </div>
+    
+            <!-- Modal body -->
+            <form action="#" method="post">
+            {% csrf_token %}
+            <div class="modal-body text-center">
+            <div class="row justify-content-center">
+                <div class="col-xl-12 col-md-12">
+                <!-- Email input -->
+                <div class="form-outline ">
+                    {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom" required/> {% endcomment %}
+                    {{ form_mention.mention }}
+                    <label class="form-label float-start" for="{{form_mention.mention.id_for_label}}">Mention</label>
+                </div>
+                {% comment %} <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
+                </div>
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'ajouter_parcours' %}"><button type="button" class="btn btn-danger">Close</button></a>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+        </form>
+        </div>
+        </div>
+    </div>
+    {% comment %} ajout effectuer {% endcomment %}
+    <div class="modal fade" tabindex="-1" id="modalAjout" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+    
+            <!-- Modal Header -->
+            <div class="modal-header">
+            <h4 class="modal-title">Ajout</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+    
+            <!-- Modal body -->
+            <div class="modal-body text-center">
+            <div class="text-center text-success mt-3">
+                <i class="far fa-check-circle fa-6x" style="color:#a5dc86;"></i>
+            </div>
+            <br>
+            <div class="mb-3">
+                Ajout effectuer avec success
+            </div>
+            </div>
+    
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            <a href = "{% url 'ajouter_parcours' %}"><button type="button" class="btn btn-success">ok</button></a>
+            </div>
+    
+        </div>
+        </div>
+    </div>
+{% endblock %}

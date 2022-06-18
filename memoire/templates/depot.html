@@ -1,0 +1,426 @@
+{% extends 'base.html' %}
+{% block titre %} Depot Memoire {% endblock %}
+{% block active_depot %} active {% endblock %}
+
+{% block contenu %}
+<div class="contenair-xl contenair-md m-5 justify-content-center">
+    <div class="card shadow mb-4" id="depot">
+      <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <h6>Depot de memoire</h6>
+        </div>
+        <div class="card-body">
+          <nav>
+            <div class="nav nav-tabs justify-content-md-center" id="nav-tab" role="tablist">
+              <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Etudiant</button>
+              <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Memoire</button>
+              <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Soutenance</button>
+               <button class="nav-link" id="nav-contact-tab2" data-bs-toggle="tab" data-bs-target="#nav-contact2" type="button" role="tab" aria-controls="nav-contact2" aria-selected="false">Stage</button>
+            </div>
+          </nav>
+          
+          <form action="#" id="form" method="post"  enctype="multipart/form-data">
+              {% csrf_token %}
+            <!-- </div> -->
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+              <!-- formulaire etudiant -->
+              <form action = "#nav-profile" method="post" enctype="multipart/form-data">
+                <div class="container p-3" id="formulaire">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Information de l'etudiant</h6>
+                    </div>
+                    <div class="card-body">
+                   
+                      <div class="row justify-content-center">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline ">
+                              {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom" required/> {% endcomment %}
+                              {{ form_etud.nom }}
+                              <label class="form-label" for="{{form_etud.nom.id_for_label}}">Nom</label>
+                          </div>
+                          {% comment %} <div class="valid-feedback">Valid.</div>
+                          <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
+                        </div>
+                          <div class="col-xl-6 col-md-6">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                                {% comment %} <input type="text" id="form8Example2" class="form-control" name="prenom" /> {% endcomment %}
+                                {{form_etud.prenom}}
+                                <label class="form-label" for="{{form_etud.prenom.id_for_label}}">Prenom</label>
+                            </div>
+                          </div>
+                          {% comment %} <div class="col-xl-6 col-md-6">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                              {% comment %} <input type="text" id="form8Example2" class="form-control" name="matricule" required />
+                              {{form_etud.matricule}}
+                              <label class="form-label" for="{{form_etud.matricule.id_for_label}}">Matricule</label>
+                            </div>
+                          </div> {% endcomment %}
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          {% comment %} <select class="form-select" aria-label="Default select example" name="parcours">
+                            <option selected>Parcours</option>
+                            <option value="1">Parcours1</option>
+                            <option value="2">Parcours2</option>
+                            <option value="3">Parcours3</option>
+                            <option value="3">Parcours4</option>
+                          </select> {% endcomment %}
+                          {% comment %} {{form_parcours.parcours}} {% endcomment %}
+                           {{form_etud.parcours}}
+                           <label class="form-label" for="{{form_etud.matricule.id_for_label}}">Parcours</label>
+                           <a href="{% url 'ajouter_parcours' %}"><i class="fas fa-add float-end pt-1 text-success"></i></a>
+                        </div>
+
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="mention" required /> {% endcomment %}
+                            {% comment %} {{form_etud.enseignant}}  {% endcomment %}
+                            {{form_etud.matricule}}
+                            <label class="form-label" for="{{form_etud.matricule.id_for_label}}">Matricule</label>
+
+                            {% comment %} <label class="form-label" for="{{form_etud.enseignant.id_for_label}}">Encadreur</label> {% endcomment %}
+                          </div>
+                        </div>
+                      
+                        <hr>
+                       
+                   
+                      </div>
+                    </div>
+                  </div>
+                  {% comment %} <a class="btn btn-primary float-end btnNext" type="submit" id="blue">Next</a> {% endcomment %}
+                  <div class=" d-flex justify-content-center  "><a class="btn btn-primary btn-sm mx-0 next"><i class="fas fa-chevron-circle-right"></i></a></div>
+                </div>
+            
+              </div>
+            {% comment %} </form> {% endcomment %}
+              <!-- form Memoire -->
+              <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+              <div class="container px-0 py-2">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Informations du Memoire</h6>
+                    </div>
+                    <div class="card-body">
+                    <form action="#" class="was-validated">
+                      <div class="row justify-content-center">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="mb-3">
+                            {% comment %} <label for="formFile" class="form-label">Default file input example</label> {% endcomment %}
+                            {% comment %} <input class="form-control" type="file" id="formFile" name="memoire"> {% endcomment %}
+                            {{form_memoire.memoire_doc}}
+                            <label class="form-label" for="{{form_memoire.memoire_doc.id_for_label}}">memoire</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="titre" required /> {% endcomment %}
+                            {{form_memoire.titre}}
+                            <label class="form-label" for="{{form_memoire.titre.id_for_label}}">Titre</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="mot_cle" required/> {% endcomment %}
+                            {{form_memoire.mot_cle}}
+                            <label class="form-label" for="{{form_memoire.mot_cle.id_for_label}}">Mot Cle</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="date" id="form8Example2" class="form-control" name="annee_academique" required /> {% endcomment %}
+                            {{form_memoire.annee_academique}}
+                            <label class="form-label" for="{{form_memoire.annee_academique.id_for_label}}">Anne academique</label>
+                            <a href="{% url 'ajouter_annee' %}"><i class="fa fa-add float-end pt-1 text-info"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row p-3">
+                        
+                        <label for="{{form_memoire.resume.id_for_label}}">Resume:</label>
+                        {{form_memoire.resume}}
+                        {% comment %} <textarea class="form-control" rows="5" id="comment" name="resume" required></textarea> {% endcomment %}
+                      </div>
+                    </div>
+               
+                  </div>
+                </div>
+               {% comment %} <div class="nexpre "> {% endcomment %}
+                {% comment %} <a class="btn btn-primary mx-auto btnPrevious" >Previous</a>
+                <a class="btn btn-primary  btnNext" >Next</a> {% endcomment %}
+                <span class=" d-flex justify-content-center">
+                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
+                <a class="btn btn-primary btn-sm  next"><i class="fas fa-chevron-circle-right"></i></a>
+                </span>
+              </div>
+              <!-- Formulaire Soutenance -->
+              <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <div class="container px-0 py-2">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Information de Soutenance</h6>
+                    </div>
+                    <div class="card-body">
+                      <form action="#">
+                      <div class="row justify-content-center">
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                              {% comment %} <input type="text" id="form8Example2" class="form-control" name="salle" required /> {% endcomment %}
+                              {{form_soutenance.salle}}
+                              <label class="form-label" for="{{form_soutenance.salle.id_for_label}}">Salle de Soutenance</label>
+                          </div>
+                        </div>
+                          <div class="col-xl-3 col-md-3">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                                {% comment %} <input type="date" id="form8Example2" class="form-control" name="date" required /> {% endcomment %}
+                                {{form_soutenance.date_sout}}
+                                <label class="form-label" for="{{form_soutenance.date_sout.id_for_label}}">Date de Soutenance</label>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-3">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                              {% comment %} <input type="number" id="form8Example2" class="form-control" name="note" required /> {% endcomment %}
+                              {{form_soutenance.note}}
+                              <label class="form-label" for="{{form_soutenance.note.id_for_label}}">Note</label>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-3">
+                            <!-- Email input -->
+                            <div class="form-outline">
+                              {% comment %} <input type="text" id="form8Example2" class="form-control" name="mention_Sout" required /> {% endcomment %}
+                              {{form_soutenance.mention_sout}}
+                              <label class="form-label" for="{{form_soutenance.mention_sout.id_for_label}}">Mention obtenue</label>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row ">
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
+                            {{form_jury.president}}
+                            <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">president</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
+                            {{form_jury.examinateur}}
+                            <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Examinateur</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
+                            {{form_jury.encadreur}}
+                            <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Encadreur</label>
+                            <a href="{% url 'list_enseignant' %}"><i class="fa fa-info float-end pt-1 text-info"></i></a>
+
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
+                            {{form_jury.encadreur_ind}}
+                            <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Encadreur Industriel</label>
+                          </div>
+                        </div>
+                      
+                        
+                        
+                      </div>
+                    
+                    </div>
+                  </div>
+                </div>
+                <span class=" d-flex justify-content-center">
+                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
+                <a class="btn btn-primary btn-sm  next"><i class="fas fa-chevron-circle-right"></i></a>
+                </span>
+              </div>
+              <!-- formulaire Stage -->
+              <div class="tab-pane fade" id="nav-contact2" role="tabpanel" aria-labelledby="nav-contact-tab2">
+                <div class="container px-0 py-2">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Informations Stage</h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="row justify-content-center">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="type" required /> {% endcomment %}
+                            {{form_stage.type_stage}}
+                            <label class="form-label" for="{{form_stage.type_stage.id_for_label}}">Type de Stage</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="date" id="form8Example2" class="form-control" name="date_debut" required/> {% endcomment %}
+                            {{form_stage.date_debut}}
+                            <label class="form-label" for="{{form_stage.date_debut.id_for_label}}">Date Debut</label>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-3">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="date" id="form8Example2" class="form-control" name="date_fin" required /> {% endcomment %}
+                            {{form_stage.date_fin}}
+                            <label class="form-label" for="{{form_stage.date_fin.id_for_label}}">Date Fin</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row justify-content-center p-2">
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom_ent" /> {% endcomment %}
+                            {{form_stage.entreprise}}
+                            <label class="form-label" for="{{form_entreprise.nom_ent.id_for_label}}">Entreprise</label>
+                            <a href="{% url 'list_entreprise' %}"><i class="fa fa-info float-end pt-1 text-info"></i></a>
+                          </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                          <!-- Email input -->
+                          <div class="form-outline">
+                            {% comment %} <input type="text" id="form8Example2" class="form-control" name="lieu" /> {% endcomment %}
+                            {% comment %} {{form_entreprise.lieu}} {% endcomment %}
+                            {% comment %} <label class="form-label" for="{{form_entreprise.lieu.id_for_label}}">Localisation</label> {% endcomment %}
+                          </div>
+                          </div>
+                      </div>
+                        </div>
+                        {% if errors %}
+                          {% for key, error in errors %}
+                            {% autoescape off %}
+                              {{error}}
+                            {% endautoescape %}
+                          {% endfor %}
+                       {% endif %}
+                      </div>
+                                      
+                        <span class=" d-flex justify-content-center">
+                          <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
+                          <button type="submit" class="btn btn-primary"><i class="fas fa-download mx-2"></i>Enregistrer</button>
+                        </span>
+
+                      
+                       {% comment %} <div class="nexpre float-end me-5">
+                        {% comment %} <a class="btn btn-primary mx-auto btnPrevious" >Previous</a> 
+                        <input type="submit" class="btn btn-primary float-end prev" value="precedent">
+                
+                       </div> {% endcomment %}
+                      
+                      <!-- <div class="row">
+                        <label for="comment">Resume:</label>
+                        <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                      </div> -->
+                    </div>
+                  </div>
+                  
+                </div>
+                
+              </div>
+              {% for message in messages  %}
+                {% if message.tags == 'success' %}
+                  {% load static %}
+                  <script src="{% static 'jquery/jquery.min.js' %}"></script>
+                  <script>
+                    $(document).ready(function(){
+                      $("#myModal").modal('show')
+                    });
+                  </script>
+                {% else %}
+                  alert("hello");  
+                {% endif %}
+              {% endfor %}
+
+
+              {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                Open modal
+              </button> {% endcomment %}
+            </form>
+             
+             
+          
+          </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+  {% comment %} <h3>Fading Modal Example</h3>
+  <p>Click on the button to open the modal.</p> {% endcomment %}
+  
+ 
+</div>
+</div>
+
+<!-- The Modal Enregistrement -->
+<div class="modal fade" tabindex="-1" id="myModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Memoire</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+        <div class="text-center text-success mt-3">
+            <i class="far fa-check-circle fa-6x" style="color:#a5dc86;"></i>
+        </div>
+        <br>
+        <div class="mb-3">
+          Enregistrement effectuer avec success
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- The Modal ajouter_enseignant -->
+
+
+<script>
+  $('.next').click(function(){
+  $('.nav-tabs > .active').next('button').trigger('click');
+});
+
+  $('.prev').click(function(){
+  $('.nav-tabs > .active').prev('button').trigger('click');
+});
+</script>
+
+{% endblock %}
