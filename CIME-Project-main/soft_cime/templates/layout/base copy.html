@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Youafiq Sanda Haman">
+    <meta name="keywords" content="CIME, impots, moyennes entreprises, statistiques, émissions, recouvrement, gestion, amr"> 
+    <meta name="generator" content="Hugo 0.88.1">
+    <link rel="icon" href="{% static 'img/Logo Gestionnaire CIME(1).png' %}">
+    <title>{% block title%} Soft CIME {% endblock %}</title>
+
+    
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/dataTables.bootstrap5.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap-icons.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
+
+    <body style="overflow-x: hidden;background:#d3d3d338;">
+        <header class="bg-success text-white">
+            <div class="container p-0">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    {% if user_connected.username == '@dmin' %}
+                    <a href="/admin" class="text-decoration-none me-5 ms-0">
+                        <img src="{% static 'img/logo_gestionnaire_blanc.png' %}" width="210">
+                    </a>
+                    {% else %}
+                    <a href="{% url 'index'%}" class="text-decoration-none me-5 ms-0">
+                        <img src="{% static 'img/logo_gestionnaire_blanc.png' %}" width="210">
+                    </a>
+                    {% endif %}
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li id="contribuable"><a href="{% url 'liste_contribuable' %}"  class="nav-link px-3 text-white">Contribuables</a></li>
+                    <li id="gestion"><a href="{% url 'liste_declaration'%}" class="nav-link px-3 text-white">Gestion et suivi</a></li>
+                    <li id="recette"><a href="{% url 'liste_payements' %}" class="nav-link px-3 text-white">Suivi des payements</a></li>
+                    <li id="amr"><a href="{% url 'liste_amr' %}" class="nav-link px-3 text-white">Suivi des AMR</a></li>
+                    <li id="stats"><a href="{% url 'stats1' %}" class="nav-link px-3 text-white">Statistiques</a></li>
+                    </ul>
+
+                    <div class="text-end">
+                    <a href="{% url 'logout' %}" class="btn btn-warning" >Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <div class="container-fluid">
+            <div class="row flex-nowrap">
+                
+                <div class="col py-3 p-5">
+                {%block contain%}
+                    
+                {%endblock%} 
+                </div>
+            </div>
+        </div>
+    
+        <footer class="bg-light text-center text-lg-start">
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                @Gestionnaire 2022
+                <a class="text-dark" href="www.impots.cm">
+                    <img src="{% static "img/logo-dgi.png" %}" alt="DGI" width="30" height="24">
+                </a>
+            </div>
+        </footer>
+
+
+        <script src="{% static "js/bootstrap.min.js" %}"></script>
+        <script src="{% static "js/bootstrap.bundle.min.js" %}"></script>
+        <script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
+        <script src="{% static "js/app.js" %}"></script>
+        <script src="{% static "js/jquery.dataTables.min.js" %}"></script>
+        <script src="{% static "js/dataTables.bootstrap5.min.js" %}"></script>
+        <script src="{% static "js/popper.min.js" %}"></script>
+        <script src="{% static "js/Chart.js" %}"></script>
+        
+    </body>
+</html>

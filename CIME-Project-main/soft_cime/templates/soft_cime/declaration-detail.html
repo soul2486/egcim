@@ -1,0 +1,161 @@
+{% extends "layout/gestion_layout.html" %}
+
+{% block title %}
+Déclaration {{declaration.num_avis}} 
+{% endblock title %}
+
+{% block contain %}
+    
+    <div class="container bootstrap snippets bootdey justify-content-center" >
+        <h4 class="bg-success text-white text-center"> Détail Déclaration</h4>
+        <div class="panel-body inf-content justify-content-center" id="page">
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-8" id="infoG">
+                    <h5 class="h5 text-center text-uppercase bg-dark p-3 bg-opacity-25">Information Générales</h5>
+                    <table class="table table-user-information ">
+                        <tbody>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                        N° Avis                                              
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.num_avis}}  
+                                        
+                                </td>
+                            </tr>
+                            <tr>    
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-user  text-primary"></span>    
+                                        Contribuable
+                                                                                    
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.contribuable.NIU}}<br>
+                                    {{declaration.contribuable.raison_social}}
+                                    <a href="{% url 'detail_contrib' declaration.contribuable.id %}" class="text-primary text-center" class="text-danger" alt="Supprimer ?"><i class="bi bi-info-square-fill"></i></a>
+                                    
+                                        
+                                </td>
+                            </tr>
+                                    
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-bookmark text-primary"></span> 
+                                        Chiffre d'affaire                                            
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.chiffre_affaire}} 
+                                        
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                        Date d'émission
+                                                                                    
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.date_emission}}  
+                                    
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-cloud text-primary"></span>  
+                                        Date Limite
+                                                                                    
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.date_limite}}  
+                                    
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                        Emis par                                              
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {{declaration.personnel}} 
+                                </td>
+                            </tr>
+                            <tr>        
+                                <td>
+                                    <strong>
+                                        <span class="glyphicon glyphicon-eye-open text-primary"></span> 
+                                        Statut payement                                              
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <i class="{% if 'Payé' in statut %}text-success{% else %}text-danger{% endif %}">{{statut}}</i>  
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                                            
+                </div>
+                
+            </div>
+            <div class="row table-responsive justify-content-center">
+                <div class="col-md-8" id="impots">
+                    <h5 class="h5 text-center text-uppercase bg-dark p-3 bg-opacity-25">Impots Déclarés</h5>
+                    <table class="table table-bordered">
+
+                        <thead>
+                            <th>impots</th>
+                            <th>Montant pricipal</th>
+                            <th>Repartition</th>
+                        </thead>
+                        <tbody>
+                            {% for a, b, c in im_dec %}
+                                <tr>
+                                    <td>
+                                        {{a}}
+                                    </td>
+                                    <td>
+                                        {{b}}
+                                    </td>
+                                    
+                                    <td>
+                                    {% for i in c %}
+                                        {{i}} <br>
+                                    {% endfor %}
+                                    </td>
+                                </tr>
+                            {% endfor %} 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+           
+    </div> 
+    <center >
+        <a href="{% url 'excel_declaration' declaration.id %}" class="btn btn-success"><i class="bi bi-printer-fill"></i> IMPRIMER</a>
+        <a href="{% url 'update_declaration' declaration.id %}" class="btn btn-secondary"><i class="bi bi-pencil-fill"></i> MODIFIER</a>
+    </center>
+
+
+
+    <script>
+        document.getElementById('gestion').classList.add('fw-bold')
+        document.getElementById('gestion').classList.add('fs-5')
+        document.getElementById('menu').children[0].children[0].classList.add('text-white')
+        document.getElementById('menu').children[0].children[0].classList.add('fw-bold')
+        document.getElementById('menu').children[0].children[0].classList.remove('text-white-50')
+    </script>
+{% endblock contain %}

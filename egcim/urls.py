@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('memoire/', include('memoire.urls')),
+    path('', include('memoire.urls')),
     path('admin/', admin.site.urls),
 ]
 # if settings.DEBUG:

@@ -1,0 +1,69 @@
+{% extends "layout/amr_layout.html" %}
+
+{% block title %}
+Nouvel AMR
+{% endblock title %}
+{% block contain %}
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-9 col-md-9 col-11 text-center">
+            <div class="card">
+                <h5 class="text-center  card-header bg-success text-white">ENREGISTRER UN AMR</h5>
+                <form class="form-card card-body m-4 text-start" method="POST" action="">
+                {% csrf_token %}
+                    <div class="row justify-content-between mb-3 ">
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3" for="num_amr">Numero AMR<span class="text-danger"> *</span></label> 
+                            <input type="text" class="form-control" id="num_amr" name="num_amr" placeholder="Entrer le Numero AMR">
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex"> 
+                            <label class="form-control-label px-3" for="contribuable">Contribuable<span class="text-danger"> *</span></label> 
+                            <input type="text" class="form-control" id="contribuable" name="contribuable" placeholder="Entrer le NIU" list="liste-contribuable">
+                            <datalist id="liste-contribuable">
+                                {% for contribuable in contribuables %}
+                                <option value="{{contribuable.NIU}}">{{contribuable.NIU}}</option> 
+                                {% endfor %}
+                            </datalist>
+
+                        </div>
+                    </div>
+                    
+                    <div class="form-group flex-column d-flex"> 
+                        <label class="form-control-label px-3" for="recette_budg">Recette<span class="text-danger"> *</span></label> 
+                        <select name="recette" id="recette" class="form-select">
+                            <option selected disableb>Selectionner le compte de la recette</option>
+                            <option value="contrôle">Contrôle</option>
+                            <option value="recouvrement">Recouvrement</option>
+                        </select>
+                    </div>
+
+                    <input type="submit" id="submit" name="submit" class="btn btn-success container-fluid mt-3" value="Suivant" > 
+                    
+                    </div>
+                
+                </form>
+                {% if success %}
+                <h5 class="card-footer text-success">{{message}}</h5>
+                {% else %}
+                <h5 class="card-footer text-danger">{{message}}</h5>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>   
+
+
+
+
+    <script>
+        document.getElementById('amr').classList.add('fw-bold')
+        document.getElementById('amr').classList.add('fs-5')
+        document.getElementById('menu').children[1].children[0].classList.add('text-white')
+        document.getElementById('menu').children[1].children[0].classList.remove('text-white-50')
+        $(function(){                   
+            $('#contribuable').autocomplete();
+        });
+    </script>
+       
+{% endblock contain %}

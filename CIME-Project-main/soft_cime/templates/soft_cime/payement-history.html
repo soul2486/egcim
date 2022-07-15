@@ -1,0 +1,57 @@
+{% extends "layout/payement_layout.html" %}
+
+
+
+{% block contain %}
+    <h4 class="bg-success text-white text-center">{{nbpayement}}  Payements</h4>
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%" >
+        
+        <thead>
+            <tr>
+                <th rowspan="2">N° Virement</th>
+                <th rowspan="2">Date virement</th>
+                <th colspan="2" class="text-center">Contribuable</th>
+                <th rowspan="2">Montant</th>
+                <th rowspan="2">Emis par</th>
+            </tr>
+            <tr>
+                <th>NIU</th>
+                <th>Raison Sociale</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for payement in payements %}
+            <tr>
+                <td>{{payement.num_virement}}</td>
+                <td>{{payement.date_virement}}</td>
+                <td>{{payement.contribuable.NIU}}</td>
+                <td>{{payement.contribuable.raison_social}}</td>
+                <td>{{payement.montant}}</td>
+                <td>{{payement.personnel.nom}}</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>N° Virement</th>
+                <th>Date Virement</th>
+                <th colspan="2" class="text-center">Contribuable</th>
+                <th>Montant</th>
+                <th>Emis par</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+
+
+    <script>
+        document.getElementById('recette').classList.add('fw-bold')
+        document.getElementById('recette').classList.add('fs-5')
+        document.getElementById('menu').children[0].children[0].classList.add('text-white')
+        document.getElementById('menu').children[0].children[0].classList.add('fw-bold')
+        document.getElementById('menu').children[0].children[0].classList.remove('text-white-50')
+    </script>
+{% endblock contain %}

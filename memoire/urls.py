@@ -1,6 +1,7 @@
 from re import search
 from django.urls import URLPattern, path, re_path
 from .views import * 
+from taggit.models import Tag 
 # from .views import index, 
 # from views import depot
 urlpatterns = [
@@ -8,6 +9,7 @@ urlpatterns = [
     path('depot/',depot, name = "depot"),
     path('ajouter_enseignant/',ajouter_ens, name = "ajouter_ens"),
     path('connexion/',connexion, name = "connexion"),
+    path('tag/<slug:tag_slug>',consulter, name = "memoire_tag"),
     path('ajouter_parcours/',ajouter_parcours, name = "ajouter_parcours"),
     path('ajouter_entreprise/',ajouter_entreprise, name = "ajouter_entreprise"),
     path('list_entreprise/',list_entreprise, name = "list_entreprise"),
@@ -23,8 +25,10 @@ urlpatterns = [
     # path('get_etudiant/<str:id_etudiant>/',get_etudiant, name = "get_etudiant"),
     # path('message/',feedback, name = "feedback"),
     path('consulter/',consulter, name = "consulter"),
+    path('tag/(?P<slug>[-a-zA-Z0-9_]+)\\Z',detail, name = "tagget"),
     re_path(r'^(?P<id_memoire>[0-9]+)/$', detail, name='detail'),
     path('modif_ent/<int:id_entreprise>/', modif_ent, name='modif_ent'),
+    path('parcours/<str:id_parcours>/', getparcours, name='parcours'),
     path('delete_ent/<int:id_entreprise>/', delete_ent, name='delete_ent'),
     path('modif_ens/<int:id_enseignant>/', modif_ens, name='modif_ens'),
     path('delete_ens/<int:id_enseignant>/', delete_ens, name='delete_ens'),

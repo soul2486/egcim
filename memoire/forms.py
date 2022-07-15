@@ -1,5 +1,6 @@
 from dataclasses import field, fields
 from pyexpat import model
+from time import strftime
 from django.forms import DateTimeInput, TextInput, Textarea, DateInput, FileInput, NumberInput, ModelForm, widgets
 from django import forms
 from .models import *
@@ -31,7 +32,7 @@ class enseignantForm(forms.ModelForm):
         widgets = {
             'nom_ens':TextInput(attrs={'class':'form-control'}),
             'prenom_ens':TextInput(attrs = {'class':'form-control'}),
-            'grade':TextInput(attrs = {'class':'form-control'}),
+            'grade':forms.Select(attrs = {'class':'form-control'}),
         }
     # nom_ens = forms.CharField(
     #     label = 'Nom',
@@ -159,6 +160,14 @@ class entrepriseForm(forms.ModelForm):
             'nom_ent':TextInput(attrs={'class':'form-control'}),
             'lieu':TextInput(attrs={'class':'form-control'}),
         }
+class anneeForm(forms.ModelForm):
+    class Meta :
+        model = annee_academique
+        fields = ['annee']
+        widgets = {
+            'annee':DateInput(attrs={'type':'date','class':'form-control'}, format=strftime('%Y'))
+            
+        }
 #     nom_ent = forms.CharField(
 #         label= 'Nom_entreprise',
 #         max_length=20,
@@ -176,13 +185,13 @@ class mentionForm(forms.ModelForm):
         widgets = {
             'mention':TextInput(attrs={'class':'form-control'}),
         }
-class anneeForm(forms.ModelForm):
-    class Meta:
-        model = annee_academique
-        fields = ['annee']
-        widgets = {
-            'annee':TextInput(attrs={'class':'form-control'}),
-        }
+# class anneeForm(forms.ModelForm):
+#     class Meta:
+#         model = annee_academique
+#         fields = ['annee']
+#         widgets = {
+#             'annee':TextInput(attrs={'class':'form-control'}),
+#         }
     # mention = forms.CharField(
     #     label = 'mention',
     #     max_length=20, 
@@ -211,11 +220,12 @@ class memoireForm(forms.ModelForm):
         fields = ('titre','mot_cle', 'resume','memoire_doc','annee_academique')
         widgets = {
             'titre':TextInput(attrs={'class':'form-control'}),
-            'mot_cle':TextInput(attrs = {'class':'form-control'}),
+            'mot_cle':forms.TextInput(attrs = {'class':'form-control'}),
             'resume':Textarea(attrs = {'class':'form-control'}),
             'memoire_doc':FileInput(attrs = {'class':'form-control'}),
             'annee_academique':forms.Select(attrs={'class':'form-control'}),
-            
+            # 'tags':TextInput(attrs = {'class':'form-control'}),
+
             # 'date_creation': DateInput(),
         }
 

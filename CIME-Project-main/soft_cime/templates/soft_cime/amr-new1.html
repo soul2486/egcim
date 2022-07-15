@@ -1,0 +1,92 @@
+{% extends "layout/amr_layout.html" %}
+
+{% block title %}
+Nouvel AMR
+{% endblock title %}
+{% block contain %}
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-9 col-md-9 col-11 text-center">
+            <div class="card">
+                <h5 class="text-center  card-header bg-success text-white">NOUVEAU AMR</h5>
+                <form class="form-card card-body m-4 text-start" method="POST" action="">
+                {% csrf_token %}
+                    
+                    <div class="row justify-content-between mb-3 ">
+                        <label class="form-control-label px-3" for="impot">Impots<span class="text-danger"> *</span></label>
+                        <select name="impot" class="form-control form-select mb-3">
+                            <option selected disabled>Sélectionner un impot</option>
+                            {% for impot in impots %}
+                            <option value="{{impot.impot}}">{{impot.impot}}</option>
+                            {% endfor %}
+                        </select>
+                        
+                        
+                        <div class="row justify-content-between text-left mb-3">
+                            <div class="form-group col-sm-6 flex-column d-flex"> 
+                                <label class="form-control-label px-3" for="montant">Montant<span class="text-danger"> *</span></label> 
+                                <input type="number" id="montant" name="montant" class="form-control" placeholder="Entrer le montant de l'AMR" required> 
+                            </div>
+                            
+                            <div class="form-group col-sm-6 flex-column d-flex"> 
+                                <label class="form-control-label px-3" for="recette_budg">Montant Budgétaire<span class="text-danger"> *</span></label> 
+                                <input type="number" id="recette_budg" name="recette_budg" class="form-control" placeholder="Entrer le montant de la recette budgétaire" required> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success container-fluid">Enregistrer</button>
+                    </div>
+
+                </form>
+                <h5 class="card-footer {{classmsg}}">{{message}}</h5>
+            </div>
+            <div class="row">
+                {% comment %} <i class="text-center text-uppercase">Impots Déclarés</i> {% endcomment %}
+                <table class="table table-responsive small">
+    
+                    <thead >
+                        <th>impots</th>
+                        <th>Montant pricipal</th>
+                        <th>Montant budgétaire</th>
+                        <th>Repartition</th>
+                    </thead>
+                    <tbody>
+                        {% for impot in impots_amr %}
+                            <tr>
+                                <td>
+                                    {{impot.impot}}
+                                </td>
+                                <td>
+                                    {{impot.montant}}
+                                </td>
+                                <td>
+                                    {{impot.montant_budg}}
+                                </td>
+                                <td>
+                                    {% for part_impot in impot.impot.parts_impot.all %}
+                                        {{part_impot.nom}} : {% widthratio part_impot.taux 1 impot.montant %}<br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}  
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+</div>   
+
+
+
+
+    <script>
+        document.getElementById('amr').classList.add('fw-bold')
+        document.getElementById('amr').classList.add('fs-5')
+        document.getElementById('menu').children[1].children[0].classList.add('text-white')
+        document.getElementById('menu').children[1].children[0].classList.remove('text-white-50')
+    </script>
+{% endblock contain %}

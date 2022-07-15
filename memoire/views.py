@@ -1,4 +1,3 @@
-from ast import If, Return
 from django.shortcuts import render, redirect
 from django.db.models import Q
 from django.contrib.postgres.search import SearchQuery, SearchVector,SearchRank, TrigramSimilarity
@@ -9,16 +8,31 @@ from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.template import context
 from .filters import memoireFilter
+from django.template.defaultfilters import slugify
 from .models import etudiant, memoire, soutenance, enseignant, stage, entreprise, parcours, mention
 from .forms import etudiantForm, enseignantForm, memoireForm, soutenanceForm, entrepriseForm, anneeForm, stageForm, parcoursForm, mentionForm, juryForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
+from django.db.models import Count 
 # Create your views here.
 def index(request):
     parcour = parcours.objects.all()
     memoires = memoire.objects.all()
+    list_count = []
+    for i in parcour:
+        l = []
+        c = memoire.objects.filter(etudiant__in = etudiant.objects.filter(parcours = i)).count()
+        l.append(i)
+        l.append(c)
+        list_count.append(l)
+
+    nb_memoire =memoire.objects.order_by('etudiant__parcours__parcours').count()
     context = {'parcours':parcour,
                 'memoires':memoires,
+                'nb':nb_memoire,
+                'list_count' : list_count,
     }
     return render(request,"home.html", context)
 
@@ -53,7 +67,7 @@ def depot(request):
             form_etud  = etudiantForm(request.POST).save(commit=False)
             form_soutenance = soutenanceForm(request.POST).save(commit = False)
             form_jury = juryForm(request.POST).save()
-            form_memoire = memoireForm(request.POST, request.FILES).save(commit=False)
+            form_memoire2 = form_memoire.save(commit=False)
             form_stage = stageForm(request.POST).save(commit=False)
             # form_entreprise = entrepriseForm(request.POST).save()    
             # form_stage.entreprise = form_entreprise
@@ -62,9 +76,14 @@ def depot(request):
             form_stage.save()
             form_etud.stage = form_stage
             form_etud.save()
-            form_memoire.soutenance = form_soutenance
-            form_memoire.etudiant = form_etud
-            form_memoire.save()
+            form_memoire2.soutenance = form_soutenance
+            form_memoire2.etudiant = form_etud
+            form_memoire2.slug = slugify(form_memoire2.titre)
+            # form_memoire.tags = request.GET.get('mot_cle')
+            form_memoire2.save()
+            # form_memoire.save(commit= False)
+            form_memoire.save_m2m()
+
             form_etud.stage = form_stage
             form_etud.save()
             
@@ -112,12 +131,41 @@ def depot(request):
     return render(request,'depot.html', context)
 def consulter(request):
     memoires = memoire.objects.order_by('-date_creation')[:12]
+    comons_tag = memoire.mot_cle.most_common()
     f = memoireFilter(request.GET, queryset=memoire.objects.order_by('-date_creation'))
     formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires]
-    paginator = Paginator(f.qs,4)
+    paginator = Paginator(f.qs,12)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
     context = {'memoires':page_object,'filter':f}
+    return render(request,'consulter.html', context)
+def detail(request,  Slug , id_memoire):
+    memoires = memoire.objects.get(pk = id_memoire)
+    memoires_tags_ids = memoire.mot_cle.values_list('id', flat=True)
+    similar_memoire = memoire.objects.filter(mot_cle__in = memoires_tags_ids).exclude(id=memoires.id)
+    similar_memoire = similar_memoire.annotate(same_mot_cle= Count('mot_cle')).order_by('same_mot_cle')[:3]
+    # tag = None
+    # memoirestag = None
+    if slug:
+        tag = get_object_or_404(Tag, slug=slug)
+        memoirestag = memoire.objects.filter(mot_cle__in = [tag][:3])
+        # mot_clee = memoires.mot_cle
+        # memoires_simi = memoire.objects.filter(mot_cle = mot_clee )[:12]
+        # formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires_simi]
+        context = {'memoires':memoires, 'memoirestag':memoirestag, 'tag':tag, 'similar_memoire':similar_memoire}
+    # else:
+    #     context = {'memoires':memoires, 'memoirestag':memoirestag, 'tag':tag, 'similar_memoire':similar_memoire}
+    return render(request, 'detail2.html', context)
+def getparcours(request, id_parcours):
+    parc = parcours.objects.get(parcours=id_parcours)
+    memoires = memoire.objects.filter(etudiant__parcours__parcours= parc)[:12]
+    comons_tag = memoire.tags.most_common()[:10]
+    f = memoireFilter(request.GET, queryset= memoire.objects.filter(etudiant__parcours__parcours= parc))
+    formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires]
+    paginator = Paginator(f.qs,12)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    context = {'memoires':page_object,'filter':f, 'comons_tag':comons_tag}
     return render(request,'consulter.html', context)
 def load_doc (request, memoire_id):
     id = int(memoire_id)
@@ -248,16 +296,10 @@ def ajouter_annee(request):
         form_annee = anneeForm()
         return render(request,'ajout_annee.html')
     else:
-        form_annee = mentionForm()
+        form_annee = anneeForm()
         context = {'form_annee':form_annee}
         return render(request,'ajout_annee.html', context)
-def detail(request, id_memoire):
-        memoires = memoire.objects.get(pk = id_memoire)
-        mot_clee = memoires.mot_cle
-        memoires_simi = memoire.objects.filter(mot_cle = mot_clee )[:12]
-        formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires_simi]
-        context = {'memoires':memoires, 'memoires_simi':memoires_simi}
-        return render(request, 'detail2.html', context)
+
 def search (request):
     search = request.GET.get('search')
     vector = SearchVector('titre','mot_cle', 'resume', 'etudiant__nom', 'etudiant__parcours__parcours')

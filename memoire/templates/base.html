@@ -42,7 +42,10 @@
             <div class="card-title">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top opacity-75 " id="navigation">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">Meli-Egcim</a>
+                        {% if request.user.is_authentiated %}
+                        <a class="navbar-brand" href="/admin">Mel</a>  
+                        {%endif%}  
+                        <a class="navbar-brand" href="/admin">Mel</a>  
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -52,13 +55,13 @@
                         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                             <ul class="nav nav-pills justify-content-center">
                                 <li class="nav-item">
-                                    <a class="nav-link {% block active_Accueil %}{% endblock %}" href="/memoire/">Accueil</a>
+                                    <a class="nav-link {% block active_Accueil %}{% endblock %}" href="{% url 'index' %}">Accueil</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link {% block active_depot %}{% endblock %}" href="{% url 'depot' %}">Depot</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a  class="nav-link  {% block active_consulter %}{% endblock %}" href="/memoire/consulter">Archive</a>
+                                    <a  class="nav-link  {% block active_consulter %}{% endblock %}" href="{% url 'consulter' %}">Archive</a>
                                     <ul class="dropdown-menu" >
                                         <li><a class="dropdown-item" href="#">Recent</a></li>
                                         <li><a class="dropdown-item" href="#">Tous</a></li>
@@ -111,7 +114,7 @@
 
 
 {% endblock %}
-
+<script src='https://cdn.jsdelivr.net/gh/FThompson/FormPersistence.js@2.0.6/form-persistence.min.js'></script>
     <script src="{% static 'assets/plugins/popper.min.js'%}"></script>
     <script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js'%}"></script> 
     <script  scr="{% static 'js/bootstrap.bundle.min.js' %}"></script> 

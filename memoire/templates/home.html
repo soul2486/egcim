@@ -5,17 +5,18 @@
 {% block contenu %}
     <!-- Corp Accueil -->
     <div class="container-md mt-5">
-        <div class="row justify-content-center">
+        <div class="row justify-content-start">
              <!-- Earnings (Monthly) Card Example -->
-             {% for parcour in parcours%}
+             {% for parcour,c in list_count%}
              <div class="col-xl-6 col-md-6 mb-4">
                 <div class="card border-left-primary shadow h-100 py-2">
+                    <a href="{% url 'parcours' id_parcours=parcour %}">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class=" font-weight-bold text-primary text-uppercase mb-3">
                                     {{parcour.parcours}}</div>
-                                <div class="h6 mb-0 text-gray-800">Juillet 2007-Aout 2016</div>
+                                <div class="h6 mb-0 text-gray-800">{{c}}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-book fa-2x text-gray-300"></i>
@@ -23,6 +24,8 @@
                         </div>
                     </div>
                 </div>
+            </a>
+
             </div>
             {%endfor%}
              <!-- Earnings (Annual) Card Example -->

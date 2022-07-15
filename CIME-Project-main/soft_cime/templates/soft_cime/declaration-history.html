@@ -1,0 +1,72 @@
+{% extends "layout/gestion_layout.html" %}
+
+{% block contain %}
+    <h4 class="bg-success text-white text-center">{{nbdeclaration}}  Déclarations</h4>
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%" >
+        
+        <thead>
+            <tr>
+                <th rowspan="2">N° AVIS</th>
+                <th rowspan="2">Date émission</th>
+                <th colspan="2" class="text-center">Contribuable</th>
+                <th rowspan="2">Chiffre d'affaire</th>
+                <th rowspan="2">Impôts</th>
+                <th rowspan="2">Date Limite</th>
+                <th rowspan="2">Emis par</th>
+                <th rowspan="2">Détail</th>
+            </tr>
+            <tr>
+                <th>NIU</th>
+                <th>Raison Sociale</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for declaration in declarations %}
+            <tr>
+                <td>{{declaration.num_avis}}</td>
+                <td>{{declaration.date_emission}}</td>
+                <td>{{declaration.contribuable.NIU}}</td>
+                <td>{{declaration.contribuable.raison_social}}</td>
+                <td>{{declaration.chiffre_affaire}}</td>
+                <td>
+                    {% for impot in impots_declare %}
+                        {% if impot.declaration == declaration %}
+                            {{impot.impot.impot}} : {{impot.montant}} <br />
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{declaration.date_limite}}</td>
+                <td>{{declaration.personnel.nom}}</td>
+                <td>
+                    <a href="{% url 'detail_declaration' declaration.id %}" class="text-primary text-center" class="text-danger" alt="Supprimer ?"><i class="bi bi-info-square-fill"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>N° AVIS</th>
+                <th>Date émission</th>
+                <th colspan="2" class="text-center">Contribuable</th>
+                <th>Chiffre d'affaire</th>
+                <th>Impôts</th>
+                <th>Date Limite</th>
+                <th>Emis par</th>
+                <th>Détail</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+
+
+    <script>
+        document.getElementById('gestion').classList.add('fw-bold')
+        document.getElementById('gestion').classList.add('fs-5')
+        document.getElementById('menu').children[0].children[0].classList.add('text-white')
+        document.getElementById('menu').children[0].children[0].classList.add('fw-bold')
+        document.getElementById('menu').children[0].children[0].classList.remove('text-white-50')
+    </script>
+{% endblock contain %}

@@ -95,10 +95,16 @@
     
             <!-- Modal footer -->
             <div class="modal-footer">
-            <a href = "{% url 'depot' %}"><button type="button" class="btn btn-success">ok</button></a>
+                <script>
+                    function close_window(){
+                        window.close();
+                    }
+                </script>
+            <a href = "javascript:close_window();" onclick="close_window();"><button type="button" class="btn btn-success">ok</button></a>
             </div>
     
         </div>
         </div>
     </div>
+    
 {% endblock %}

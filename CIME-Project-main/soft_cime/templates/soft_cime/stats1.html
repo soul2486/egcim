@@ -1,0 +1,115 @@
+{% extends "layout/stats_layout.html" %}
+
+{% block title %}
+Repartition des contribuables
+{% endblock title %}
+
+{% block contain %}
+    <h4 class="bg-success text-white text-center"> FICHE STATISTIQUE </h4>
+    
+    <div class="row" id="page">
+        <h5 class="text-center border-bottom"> 
+            REPARTITION PAR REGIME D'IMPOSITION ET PAR DEPARTEMENT 
+        </h5>
+        <div class="col-6 p-5">
+            <table class="table table-bordered ">
+                <thead class="bg-dark text-white text-center">
+                    <tr>
+                        <th>SOUS SECTEURS</th>
+                        <th>TAILLES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ug in ugs %}
+                    <tr>
+                        <th colspan="2" class="text-center bg-dark bg-opacity-25">UG {{ug.ug}}</th>
+                    </tr>
+                    {% for sous_secteur in ug.sous_secteur_set.all %}
+                    <tr>
+                        <td>{{sous_secteur.libelle}}</td>
+                        <td class="text-center">{{sous_secteur.contribuable_set.count}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th>TOTAL {{ug.ug}}</th>
+                        <th class="text-center">{{ug.contribuable_set.count}}</th>
+                    </tr>
+                    {% endfor %}
+                    <tfoot class="bg-dark text-white bg-opacity-75">
+                        <tr>
+                            <th>TOTAL FICHIER</th>
+                            <th class="text-center">{{nbContrib}}</th>
+                        </tr>
+                    </tfoot>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6 p-5">
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead class="bg-dark text-white text-center">
+                        <tr>
+                            <th>REGIME D'IMPOSITION</th>
+                            <th>TAILLES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for regime in regime_impots %}
+                        <tr>
+                            <td>{{regime.regime_impot}}</td>
+                            <td class="text-center">{{regime.contribuable_set.count}}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <tfoot class="bg-dark text-white bg-opacity-75">
+                            <tr>
+                                <th>TOTAL </th>
+                                <th class="text-center">{{nbContrib}}</th>
+                            </tr>
+                        </tfoot>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead class="bg-dark text-white text-center">
+                        <tr>
+                            <th>DEPARTEMENT</th>
+                            <th>TAILLES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for departement in departements %}
+                        <tr>
+                            <td>{{departement.departement}}</td>
+                            <td class="text-center">{{departement.contribuable_set.count}}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                        <tfoot class="bg-dark text-white bg-opacity-75">
+                            <tr>
+                                <th>TOTAL </th>
+                                <th class="text-center">{{nbContrib}}</th>
+                            </tr>
+                        </tfoot>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById('stats').classList.add('fw-bold')
+        document.getElementById('stats').classList.add('fs-5')
+        document.getElementById('menu').children[0].children[0].classList.add('text-white')
+        document.getElementById('menu').children[0].children[0].classList.add('fw-bold')
+        document.getElementById('menu').children[0].children[0].classList.remove('text-white-50')
+        function generatePDF(){
+            const element = document.getElementById('page');
+            html2pdf().from(element).save()
+        }
+    </script>
+{% endblock contain %}

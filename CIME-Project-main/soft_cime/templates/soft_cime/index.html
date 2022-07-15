@@ -1,0 +1,191 @@
+{% extends "layout/base copy.html" %}
+
+
+{% block title %}
+Dashboard | Gestionnaire
+{% endblock title %}
+
+
+
+{% block contain %}
+    
+    <div class="row justify-content-around custom-line ">
+        <h1 class="h1 text-center text-uppercase">Bienvenue M. {{personnel.nom}}</h1><hr>
+        <div class="bg-success bg-gradient shadow col-md-3 row me-1">
+            <div class="col-md-5 h2 border-right text-white" style="font-size:100px;">
+                <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="p-3 col-md-7">
+                <h5 class="h5 text-white text-uppercase">Contribuables</h5>
+                <b class="h1 text-white">{{nbcontrib}}</b><p>
+            </div>
+        </div>
+        <div class="bg-danger bg-gradient shadow col-md-3 row me-1">
+            <div class="col-md-5 h2 border-right text-white" style="font-size:100px;"><i class="bi bi-file-earmark-spreadsheet-fill"></i></div>
+            <div class="col-md-7 p-3">
+                <h5 class="h5 text-white text-uppercase">Déclarations ({{mois}})</h5>
+                <b class="h1 text-white">{{nbDec}}</b><p>
+            </div>
+        </div>
+        <div class="bg-warning bg-gradient shadow col-md-3 row me-1">
+            <div class="col-md-5 h2 border-right text-white" style="font-size:100px;"><i class="bi bi-cash-coin"></i></div>
+            <div class="col-md-7 p-3">
+                <h5 class="h5 text-white text-uppercase">Payements ({{mois}})</h5>
+                <b class="h1 text-white">{{nbPaye}}</b><p>
+            </div>
+        </div>
+        <div class="bg-info bg-gradient shadow col-md-3 row">
+            <div class="col-md-5 h2 border-right text-white" style="font-size:100px;"><i class="bi bi-cash-coin"></i></div>
+            <div class="col-md-7 p-3">
+                <h5 class="h5 text-white text-uppercase">AMR ({{mois}})</h5>
+                <b class="h1 text-white">{{nbAmr}}</b><p>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-4 container bg-opacity-75 bg-white bg-gradient p-5 shadow">
+            <canvas id="repartition_ug" ></canvas>
+        </div>
+        <div class="col-md-4 container bg-opacity-75 bg-white bg-gradient p-5 shadow">
+            <canvas id="repartition_ss" ></canvas>
+        </div>
+        <div class="col-md-4 container bg-opacity-75 bg-white bg-gradient p-5 shadow">
+            <canvas id="chart_dec_mois" class="container-fluid"></canvas>
+        </div>
+        
+        {% comment %} <div class="col-6 p-3 container-fluid">
+            <img src="data:image/png;base64,{{data}}" alt="" class="img-fluid">
+        </div>
+        <div class="col-6 p-3 container-fluid">
+            <img src="data:image/png;base64,{{data}}" alt="" class="img-fluid" >
+        </div> {% endcomment %}
+    </div>
+
+    <script>
+        var barColors = [
+        "#b91d47",
+        "#00aba9",
+        "#2b5797",
+        "#e8c3b9",
+        "#1e7145"
+        ];
+
+        
+
+        var config = {
+            type: 'pie',
+            data: {
+            datasets: [{
+                data: {{ ug_nbs|safe }},
+                backgroundColor: barColors,
+                label: 'Data Source : Fiscalis'
+            }],
+            labels: {{ ug_labels|safe }}
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Repartition par unité de gestion'
+                    }
+                }
+                
+            }
+        };
+
+        var config2 = {
+            type: 'pie',
+            data: {
+            datasets: [{
+                data: {{ ss_nbs|safe }},
+                backgroundColor: {{ couleur_ss|safe }},
+                label: 'Data Source : Fiscalis'
+            }],
+            labels: {{ ss_labels|safe }}
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Repartition par sous secteur'
+                    }
+                }
+                
+            }
+        };
+
+        var config1 = {
+            type: 'line',
+            data: {
+                labels: {{labels_month|safe}},
+                datasets: [
+                    {
+                        label: 'Déclarations',
+                        data: {{ nbdec_mois|safe }},
+                        borderColor: [
+                            'rgb(60, 100, 235)'
+                            ],
+                    },
+                    {
+                        label: 'Payements',
+                        data: {{ nbpaye_mois|safe }},
+                        borderColor: [
+                            'rgb(120, 50, 118)'
+                            ],
+                    },
+                    {
+                        label: 'AMR',
+                        data: {{ nbamr_mois|safe }},
+                        borderColor: [
+                            'rgb(25, 50, 75)'
+                            ],
+                            
+                    }
+                
+                ],
+                borderWidth: 1
+                
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Déclarations et Payements par mois'
+                    }
+                }
+                
+            }
+        };
+
+        
+
+        window.onload = function() {
+            var ctx1 = document.getElementById('chart_dec_mois').getContext('2d');
+            window.myLine = new Chart(ctx1, config1);
+
+            var ctx = document.getElementById('repartition_ug').getContext('2d');
+            window.myPie = new Chart(ctx, config);
+
+            var ctx2 = document.getElementById('repartition_ss').getContext('2d');
+            window.myPie1 = new Chart(ctx2, config2);
+            
+            var ctx3 = document.getElementById('chart_amr_mois').getContext('2d');
+            window.myLine1 = new Chart(ctx3, config3);
+        };
+    </script>
+
+{% endblock contain %}

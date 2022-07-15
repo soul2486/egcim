@@ -38,8 +38,9 @@
                           <!-- Email input -->
                           <div class="form-outline ">
                               {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom" required/> {% endcomment %}
-                              {{ form_etud.nom }}
+                              
                               <label class="form-label" for="{{form_etud.nom.id_for_label}}">Nom</label>
+                              {{ form_etud.nom }}
                           </div>
                           {% comment %} <div class="valid-feedback">Valid.</div>
                           <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
@@ -48,8 +49,9 @@
                             <!-- Email input -->
                             <div class="form-outline">
                                 {% comment %} <input type="text" id="form8Example2" class="form-control" name="prenom" /> {% endcomment %}
-                                {{form_etud.prenom}}
+                                
                                 <label class="form-label" for="{{form_etud.prenom.id_for_label}}">Prenom</label>
+                                {{form_etud.prenom}}
                             </div>
                           </div>
                           {% comment %} <div class="col-xl-6 col-md-6">
@@ -72,9 +74,10 @@
                             <option value="3">Parcours4</option>
                           </select> {% endcomment %}
                           {% comment %} {{form_parcours.parcours}} {% endcomment %}
-                           {{form_etud.parcours}}
+                          
                            <label class="form-label" for="{{form_etud.matricule.id_for_label}}">Parcours</label>
-                           <a href="{% url 'ajouter_parcours' %}"><i class="fas fa-add float-end pt-1 text-success"></i></a>
+                           {{form_etud.parcours}}
+                           <a href="{% url 'ajouter_parcours' %}" target ="_blank"><i class="fas fa-add float-end pt-1 text-success"></i></a>
                         </div>
 
                         <div class="col-xl-6 col-md-6">
@@ -82,9 +85,9 @@
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="mention" required /> {% endcomment %}
                             {% comment %} {{form_etud.enseignant}}  {% endcomment %}
-                            {{form_etud.matricule}}
+                            
                             <label class="form-label" for="{{form_etud.matricule.id_for_label}}">Matricule</label>
-
+                            {{form_etud.matricule}}
                             {% comment %} <label class="form-label" for="{{form_etud.enseignant.id_for_label}}">Encadreur</label> {% endcomment %}
                           </div>
                         </div>
@@ -96,7 +99,7 @@
                     </div>
                   </div>
                   {% comment %} <a class="btn btn-primary float-end btnNext" type="submit" id="blue">Next</a> {% endcomment %}
-                  <div class=" d-flex justify-content-center  "><a class="btn btn-primary btn-sm mx-0 next"><i class="fas fa-chevron-circle-right"></i></a></div>
+                  <div class=" d-flex justify-content-center  "><a class="btn btn-primary btn-sm mx-0 next">suivant<i class="fas fa-chevron-circle-right ps-2 "></i></a></div>
                 </div>
             
               </div>
@@ -117,16 +120,18 @@
                           <div class="mb-3">
                             {% comment %} <label for="formFile" class="form-label">Default file input example</label> {% endcomment %}
                             {% comment %} <input class="form-control" type="file" id="formFile" name="memoire"> {% endcomment %}
-                            {{form_memoire.memoire_doc}}
+                            
                             <label class="form-label" for="{{form_memoire.memoire_doc.id_for_label}}">memoire</label>
+                            {{form_memoire.memoire_doc}}
                           </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="titre" required /> {% endcomment %}
-                            {{form_memoire.titre}}
+                            
                             <label class="form-label" for="{{form_memoire.titre.id_for_label}}">Titre</label>
+                            {{form_memoire.titre}}
                           </div>
                         </div>
                       </div>
@@ -135,17 +140,19 @@
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="mot_cle" required/> {% endcomment %}
-                            {{form_memoire.mot_cle}}
+                            
                             <label class="form-label" for="{{form_memoire.mot_cle.id_for_label}}">Mot Cle</label>
+                            {{form_memoire.mot_cle}}
                           </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="date" id="form8Example2" class="form-control" name="annee_academique" required /> {% endcomment %}
-                            {{form_memoire.annee_academique}}
+                            
                             <label class="form-label" for="{{form_memoire.annee_academique.id_for_label}}">Anne academique</label>
-                            <a href="{% url 'ajouter_annee' %}"><i class="fa fa-add float-end pt-1 text-info"></i></a>
+                            {{form_memoire.annee_academique}}
+                            <a href="{% url 'ajouter_annee' %}" target ="_blank"><i class="fa fa-add float-end pt-1 text-info"></i></a>
                           </div>
                         </div>
                       </div>
@@ -163,8 +170,8 @@
                 {% comment %} <a class="btn btn-primary mx-auto btnPrevious" >Previous</a>
                 <a class="btn btn-primary  btnNext" >Next</a> {% endcomment %}
                 <span class=" d-flex justify-content-center">
-                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
-                <a class="btn btn-primary btn-sm  next"><i class="fas fa-chevron-circle-right"></i></a>
+                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="ps-2 fas fa-chevron-circle-left"></i> precedent</a>              
+                <a class="btn btn-primary btn-sm  next">suivant<i class="ps-2 fas fa-chevron-circle-right"></i></a>
                 </span>
               </div>
               <!-- Formulaire Soutenance -->
@@ -182,32 +189,36 @@
                           <!-- Email input -->
                           <div class="form-outline">
                               {% comment %} <input type="text" id="form8Example2" class="form-control" name="salle" required /> {% endcomment %}
-                              {{form_soutenance.salle}}
+                              
                               <label class="form-label" for="{{form_soutenance.salle.id_for_label}}">Salle de Soutenance</label>
-                          </div>
+                              {{form_soutenance.salle}}
+                            </div>
                         </div>
                           <div class="col-xl-3 col-md-3">
                             <!-- Email input -->
                             <div class="form-outline">
                                 {% comment %} <input type="date" id="form8Example2" class="form-control" name="date" required /> {% endcomment %}
-                                {{form_soutenance.date_sout}}
+                                
                                 <label class="form-label" for="{{form_soutenance.date_sout.id_for_label}}">Date de Soutenance</label>
-                            </div>
+                                {{form_soutenance.date_sout}}
+                              </div>
                           </div>
                           <div class="col-xl-3 col-md-3">
                             <!-- Email input -->
                             <div class="form-outline">
                               {% comment %} <input type="number" id="form8Example2" class="form-control" name="note" required /> {% endcomment %}
-                              {{form_soutenance.note}}
+                              
                               <label class="form-label" for="{{form_soutenance.note.id_for_label}}">Note</label>
+                              {{form_soutenance.note}}
                             </div>
                           </div>
                           <div class="col-xl-3 col-md-3">
                             <!-- Email input -->
                             <div class="form-outline">
                               {% comment %} <input type="text" id="form8Example2" class="form-control" name="mention_Sout" required /> {% endcomment %}
-                              {{form_soutenance.mention_sout}}
+                              
                               <label class="form-label" for="{{form_soutenance.mention_sout.id_for_label}}">Mention obtenue</label>
+                              {{form_soutenance.mention_sout}}
                             </div>
                           </div>
                       </div>
@@ -216,25 +227,28 @@
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
-                            {{form_jury.president}}
+                           
                             <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">president</label>
+                            {{form_jury.president}}
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-3">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
-                            {{form_jury.examinateur}}
+                            
                             <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Examinateur</label>
+                            {{form_jury.examinateur}}
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-3">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
-                            {{form_jury.encadreur}}
+                            
                             <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Encadreur</label>
-                            <a href="{% url 'list_enseignant' %}"><i class="fa fa-info float-end pt-1 text-info"></i></a>
+                            {{form_jury.encadreur}}
+                            <a href="{% url 'list_enseignant' %}" target ="_blank"><i class="fa fa-info float-end pt-1 text-info"></i></a>
 
                           </div>
                         </div>
@@ -242,8 +256,9 @@
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="jury" required /> {% endcomment %}
-                            {{form_jury.encadreur_ind}}
+                            
                             <label class="form-label" for="{{form_soutenance.jury.id_for_label}}">Encadreur Industriel</label>
+                            {{form_jury.encadreur_ind}}
                           </div>
                         </div>
                       
@@ -255,8 +270,8 @@
                   </div>
                 </div>
                 <span class=" d-flex justify-content-center">
-                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
-                <a class="btn btn-primary btn-sm  next"><i class="fas fa-chevron-circle-right"></i></a>
+                  <a class="btn btn-primary btn-sm mx-3 prev"><i class="ps-2 fas fa-chevron-circle-left"></i> precedent</a>              
+                <a class="btn btn-primary btn-sm  next">suivant<i class="ps-2 fas fa-chevron-circle-right"></i></a>
                 </span>
               </div>
               <!-- formulaire Stage -->
@@ -273,24 +288,27 @@
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="type" required /> {% endcomment %}
-                            {{form_stage.type_stage}}
+                           
                             <label class="form-label" for="{{form_stage.type_stage.id_for_label}}">Type de Stage</label>
+                            {{form_stage.type_stage}}
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-3">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="date" id="form8Example2" class="form-control" name="date_debut" required/> {% endcomment %}
-                            {{form_stage.date_debut}}
+                            
                             <label class="form-label" for="{{form_stage.date_debut.id_for_label}}">Date Debut</label>
+                            {{form_stage.date_debut}}
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-3">
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="date" id="form8Example2" class="form-control" name="date_fin" required /> {% endcomment %}
-                            {{form_stage.date_fin}}
+                            
                             <label class="form-label" for="{{form_stage.date_fin.id_for_label}}">Date Fin</label>
+                            {{form_stage.date_fin}}
                           </div>
                         </div>
                       </div>
@@ -299,14 +317,16 @@
                           <!-- Email input -->
                           <div class="form-outline">
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom_ent" /> {% endcomment %}
-                            {{form_stage.entreprise}}
+                            
                             <label class="form-label" for="{{form_entreprise.nom_ent.id_for_label}}">Entreprise</label>
+                            {{form_stage.entreprise}}
                             <a href="{% url 'list_entreprise' %}"><i class="fa fa-info float-end pt-1 text-info"></i></a>
                           </div>
                         </div>
                         <div class="col-xl-6 col-md-6">
                           <!-- Email input -->
                           <div class="form-outline">
+                            {{form_memoire.tags}}
                             {% comment %} <input type="text" id="form8Example2" class="form-control" name="lieu" /> {% endcomment %}
                             {% comment %} {{form_entreprise.lieu}} {% endcomment %}
                             {% comment %} <label class="form-label" for="{{form_entreprise.lieu.id_for_label}}">Localisation</label> {% endcomment %}
@@ -324,8 +344,8 @@
                       </div>
                                       
                         <span class=" d-flex justify-content-center">
-                          <a class="btn btn-primary btn-sm mx-3 prev"><i class="fas fa-chevron-circle-left"></i></a>              
-                          <button type="submit" class="btn btn-primary"><i class="fas fa-download mx-2"></i>Enregistrer</button>
+                          <a class="btn btn-primary btn-sm mx-3 prev"><i class="ps-2 fas fa-chevron-circle-left"></i> precedent</a>              
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-download mx-2"></i>Enregistrer</button>
                         </span>
 
                       

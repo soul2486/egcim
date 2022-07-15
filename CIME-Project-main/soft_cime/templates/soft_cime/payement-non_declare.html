@@ -1,0 +1,62 @@
+{% extends "layout/payement_layout.html" %}
+
+
+{% block title %}
+Payements non déclarés
+{% endblock title %}
+
+{% block contain %}
+    <h4 class="bg-success text-white text-center">{{nb_paye_non}}  Payements Non Déclarés</h4>
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%" >
+        
+        <thead>
+            <tr>
+                <th rowspan="2">N° AVIS</th>
+                <th colspan="2">Contribuable</th>
+                <th rowspan="2">Date Payement</th>
+                <th rowspan="2">Montant</th>
+                <th rowspan="2">Déclarez</th>
+            </tr>
+            <tr>
+                <th>NIU</th>
+                <th>Raison sociale</th>
+            </tr>
+        </thead>
+        <tbody>
+           {% for payement in payement_history %}
+            <tr>
+                <td>{{payement.num_avis}}</td>
+                <td>{{payement.contribuable.NIU}}</td>
+                <td>{{payement.contribuable.raison_social}}</td>
+                <td>{{payement.date}}</td>
+                <td>{{payement.montant}}</td>
+                <td>
+                    <a href="{% url 'new_declaration1' payement.id %}" class="text-primary text-center" class="text-danger" alt="Déclarer"><i class="bi bi-plus"></i></a>
+                </td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>N° AVIS</th>
+                <th colspan="2">Contribuable</th>
+                <th>Date Payement</th>
+                <th>Montant</th>
+                <th>Déclarez</th>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+
+
+    <script>
+        document.getElementById('recette').classList.add('fw-bold')
+        document.getElementById('recette').classList.add('fs-5')
+        document.getElementById('menu').children[2].children[0].classList.add('text-white')
+        document.getElementById('menu').children[2].children[0].classList.add('fw-bold')
+        document.getElementById('menu').children[2].children[0].classList.remove('text-white-50')
+    </script>
+{% endblock contain %}

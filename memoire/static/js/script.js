@@ -1,3 +1,6 @@
+import FormPersistence from 'form-persistence';
+let myForm = document.getElementById('form')
+FormPersistence.persist(myForm, true)
 var prevScrollpos = window.pageYOffset;
 window.onscroll = function() {
   var currentScrollPos = window.pageYOffset;

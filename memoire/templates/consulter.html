@@ -28,11 +28,14 @@
 								
 								<div class="col-auto">
 									<h1 class="app-page-title mb-0">MEMOIRE</h1>
+									
 								</div>
 								<div class="col-auto">
 									<div class="page-utilities">
 										<div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-											<div class="col-auto">
+											
+											<div class="col-auto ">
+												
 												<form class="docs-search-form row gx-1  align-items-center" method = "get" action = "{% url 'search' %}">
 													<div class="col-auto m-2">
 														<input type="text" name="search"
@@ -40,9 +43,10 @@
 													</div>
 													<div class="col-auto">
 														<button type="submit" class="btn app-btn-secondary">Search</button>
+														
 													</div>
 												</form>
-		
+												
 											</div>
 											<!--//col-->
 											{% comment %} <div class="col-auto">
@@ -102,6 +106,17 @@
 								</div>
 							<div class="col-md-9">
 							<div class="row g-4 mb-2 ">
+								{% comment %} <div class="inline" style=" height: 45px; overflow-x:scroll;">
+									<table>
+										<tr>
+											{% for tag in comons_tag %}
+											<th>
+												<a href = "#" class=" badge badge-success">{{tag}}</a>
+											</th>
+											{% endfor %}
+										</tr>
+									</table>
+									</div> {% endcomment %}
 							{% for memoire in memoires %}
 								<div class="col-6  col-md-4 col-xl-3 col-xxl-2">
 									<div class="app-card app-card-doc shadow-sm h-100">
@@ -124,6 +139,10 @@
 													{% comment %} {% endfor%} {% endcomment %}
 													<li><span class="text-muted">parcours:</span> {{memoire.etudiant.parcours.parcours}}</li>
 													<li><span class="text-muted">deposer le:</span> {{memoire.date_creation}}</li>
+													
+													<li>
+														
+													</li>
 												</ul>
 											</div>
 											<!--//app-doc-meta-->

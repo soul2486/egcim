@@ -1,0 +1,1 @@
+ render(request, 'docchecker/results_mod.html', {'results': lstofres})

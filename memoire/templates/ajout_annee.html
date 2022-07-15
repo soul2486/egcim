@@ -27,7 +27,7 @@
     
             <!-- Modal Header -->
             <div class="modal-header">
-            <h4 class="modal-title">Ajouter une mention</h4>
+            <h4 class="modal-title">Ajouter une annee_academique</h4>
             <a href = "{% url 'ajouter_parcours' %}"><button type="button" class="btn-close"></button></a>
             </div>
     
@@ -40,8 +40,9 @@
                 <!-- Email input -->
                 <div class="form-outline ">
                     {% comment %} <input type="text" id="form8Example2" class="form-control" name="nom" required/> {% endcomment %}
-                    {{ form_mention.mention }}
-                    <label class="form-label float-start" for="{{form_mention.mention.id_for_label}}">Mention</label>
+                    
+                    <label class="form-label float-start" for="">Annee academique</label>
+                    {{ form_annee.annee}}
                 </div>
                 {% comment %} <div class="valid-feedback">Valid.</div>
                 <div class="invalid-feedback">Please fill out this field.</div> {% endcomment %}
