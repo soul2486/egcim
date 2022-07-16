@@ -45,7 +45,7 @@ Etats statistiques
             </div>
             <div class="col-12">
                 
-                <table class="table table-bordered table-hover">
+                <table id="example" class="table table-striped table-bordered table-hover">
                     <thead class="text-center bg-dark bg-opacity-25">
                         <tr>
                             <th >
@@ -138,8 +138,33 @@ Etats statistiques
                                 <a href="{% url 'excel_plan_action' num_m an %}" class="btn btn-info"><i class="bi bi-arrow-down-circle"></i></a>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <a href="{% url 'excelStats2' num_m an %}" class="nav-link">
+                                    Statistique des performances
+                                </a>
+                            </td>
+                            <td>
+                                {{mois}}-{{an}}
+                            </td>
+                            <td>
+                                <a href="{% url 'excelStats2' num_m an %}" class="btn btn-info"><i class="bi bi-arrow-down-circle"></i></a>
+                            </td>
+                        </tr>
                     </tbody>
-                    
+                    <tfoot class="text-center bg-dark bg-opacity-25">
+                        <tr>
+                            <th >
+                                Etat
+                            </th>
+                            <th>
+                                Mois
+                            </th>
+                            <th>
+                                Télécharger
+                            </th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             

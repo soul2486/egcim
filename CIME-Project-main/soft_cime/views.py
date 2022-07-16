@@ -18,7 +18,7 @@ from soft_cime.utils import render_to_pdf
 from django.views.generic import View
 import numpy as np
 import io
-# from .form import *
+from .form import *
 
 from datetime import date
 
@@ -239,45 +239,46 @@ def new_contribuable(request):
     classmsg = ""
     if request.method == 'POST':
         NIU = request.POST.get('NIU')
-        raison_social = request.POST.get('raison_social')
-        activite = request.POST.get('activite')
-        telephone = request.POST.get('telephone')
-        arrondissement = request.POST.get('arrondissement')
-        departement = Departement.objects.get(departement=request.POST.get('departement'))
-        regime_impot = Regime_impot.objects.get(regime_impot=request.POST.get('regime_impot'))
-        ug = UG.objects.get(ug=request.POST.get('ug'))
-        sous_secteur = Sous_secteur.objects.get(libelle=request.POST.get('sous_secteur'))
+        # raison_social = request.POST.get('raison_social')
+        # activite = request.POST.get('activite')
+        # telephone = request.POST.get('telephone')
+        # arrondissement = request.POST.get('arrondissement')
+        # departement = Departement.objects.get(departement=request.POST.get('departement'))
+        # regime_impot = Regime_impot.objects.get(regime_impot=request.POST.get('regime_impot'))
+        # ug = UG.objects.get(ug=request.POST.get('ug'))
+        # sous_secteur = Sous_secteur.objects.get(libelle=request.POST.get('sous_secteur'))
         
         
-        if len(contribuable.objects.filter(NIU=NIU))==0:
-            newContrib = contribuable.objects.create(NIU=NIU, raison_social=raison_social, activite=activite, regime_impot=regime_impot,telephone=telephone, arrondissement=arrondissement, departement=departement, ug=ug, sous_secteur=sous_secteur)
-            if newContrib.save():
-                message = "Enregistrer avec succès"
-                classmsg = "text-success"
-            else:
-                message = "Erreur lors de l'enregistrement"
-                classmsg = "text-danger"
-        else:
-            message = "Le contribuable existe dejà"
-            classmsg = "text-danger"
+        formContrib = ContribuableForm(request.POST).save()
+        messages.success(request, 'empty')
+        formContrib = ContribuableForm()
+            # if newContrib.save():
+            #     message = "Enregistrer avec succès"
+            #     classmsg = "text-success"
+            # else:
+            #     message = "Erreur lors de l'enregistrement"
+            #     classmsg = "text-danger"
+    else:
+        formContrib = ContribuableForm()
         
         
         
         
             
-    regimes_impots = Regime_impot.objects.all()
-    departements = Departement.objects.all()
-    impots = Impot.objects.all()
-    ugs = UG.objects.all()
-    sous_secteurs = Sous_secteur.objects.all()
+    # regimes_impots = Regime_impot.objects.all()
+    # departements = Departement.objects.all()
+    # impots = Impot.objects.all()
+    # ugs = UG.objects.all()
+    # sous_secteurs = Sous_secteur.objects.all()
     context = {
         'message':message,
-        'regimes_impots' : regimes_impots,
-        'departements' : departements,
-        'impots':impots,
-        'ugs':ugs,
-        'sous_secteurs':sous_secteurs,
+        # 'regimes_impots' : regimes_impots,
+        # 'departements' : departements,
+        # 'impots':impots,
+        # 'ugs':ugs,
+        # 'sous_secteurs':sous_secteurs,
         'classmsg' : classmsg,
+        'formContrib' : formContrib,
     }
     return render(request, "soft_cime/contribuable-new.html", context)
 
@@ -513,7 +514,7 @@ def new_declaration_impots(request, idDec):
         if len(imp) != 0:
             montant = request.POST.get("montant")
             impot = Impot.objects.get(impot=request.POST.get('impot'))
-            exist = Impot_Declare.objects.filter(impot=impot) & Impot_Declare.objects.filter(declaration=declaration)
+            exist = Impot_Declare.objects.filter(impot=impot).filter(declaration=declaration)
             if len(exist) == 0:
                 newImpotDec = Impot_Declare.objects.create(declaration=declaration, impot=impot, montant=montant)
                 newImpotDec.save()
@@ -1376,7 +1377,7 @@ def stat_perf_gestion(request):
 
 # Excel stats 2
 @login_required
-def excelStats2(request):
+def excelStats2(request,m, y):
     wbl=load_workbook("soft_cime/static/doc/statistiques.xlsx")
     wb= Workbook()
     ws = wbl["Evaluation"]
@@ -1449,7 +1450,7 @@ def excelStats2(request):
     # set_border(ws, plage)
     
     # impots_declare = Impot_Declare.objects.filter(declaration in (Declaration.objects.filter(date_limite__month = today.month-1) &  Declaration.objects.filter(date_limite__year = today.year)))
-    impots_declare = Impot_Declare.objects.all()
+    impots_declare = Impot_Declare.objects.filter(declaration__in = Declaration.objects.filter(date_limite__month = m).filter(date_limite__year = y))
 
     for impot_dec in impots_declare:
         ref = str(dico[impot_dec.declaration.contribuable.ug.ug]) + str(dico[impot_dec.impot.impot])
@@ -1462,10 +1463,10 @@ def excelStats2(request):
         # ws[dico["T_impot"]+""+dico[impot_dec.impot.impot]]="=SUM("
     
     
-    wbl.save(os.path.expanduser("~/Downloads/stats_performance.xlsx"))
-    os.popen(os.path.expanduser("~/Downloads/stats_performance.xlsx"))
+    wbl.save(os.path.expanduser("~/Downloads/stats_performance_-_" + mois[m] + " " + str(y) +".xlsx"))
+    os.popen(os.path.expanduser("~/Downloads/stats_performance_-_" + mois[m] + " " + str(y) +".xlsx"))
     
-    return redirect('stats2')
+    return redirect('stats_etats')
 
 @login_required
 def stat_perf_recette(request):
@@ -1662,9 +1663,9 @@ def stats_consolide_irc(request, m, y):
     # TDL
     j=chr(ord(j) - 1)
     i=i+1
-    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'] + Part_Impot.objects.get(nom='PAT TDL').montant((zeroifnone(Impot.objects.get(impot='PATENTE').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'])))
+    ws[j+str(i)] = zeroifnone(Impot.objects.get(impot='TDL').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum']) + Part_Impot.objects.get(nom='PAT TDL').montant((zeroifnone(Impot.objects.get(impot='PATENTE').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'])))
     j=chr(ord(j) + 1)
-    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_amr_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum']
+    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_amr_set.filter(amr__in = amrs).aggregate(Sum('montant'))['montant__sum']
     
     
     
@@ -1739,7 +1740,7 @@ def stats_consolide_irc(request, m, y):
     ws[j+str(i)] = Impot.objects.get(impot='FNE').impot_amr_set.filter(Q(date__month = mois_stats) and Q(date__year = an_stats)).aggregate(Sum('montant'))['montant__sum']
     
     
-    wb.save(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + ".xlsx"))
+    wb.save(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + " " + str(an_stats) +".xlsx"))
     os.popen(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + " " + str(an_stats) +  ".xlsx"))
     
     return redirect('stats_etats')

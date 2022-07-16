@@ -19,6 +19,8 @@
     {% comment %} <link rel="stylesheet" href="{% static 'font/css/all.min.css'%}"> {% endcomment %}
     {% comment %} <script defer src="https://unpkg.com/alpinejs@3.7.1/dist/cdn.min.js"></script> {% endcomment %}
     <script defer src="{% static 'assets/plugins/fontawesome/js/all.min.js'%}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {% block document %} {% endblock %}
      
     <!-- <link rel="stylesheet" href="{% static 'css/fontawesome.min.css'%}"> -->
@@ -120,14 +122,15 @@
     <script  scr="{% static 'js/bootstrap.bundle.min.js' %}"></script> 
     <script src="{% static 'jquery/jquery.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!-- Page Specific JS -->
     <script src="{% static 'assets/js/app.js'%}"></script> 
     <script src="{% static 'jquery/jquery.js' %}"></script>
-    {% comment %} <script>
-        $(document).ready(function(){
-        $("#modalParc").modal('show');
+    <script>
+        $(document).ready(function() {
+          $('#id_parcours').select2();
         });
-    </script> {% endcomment %}
+        </script>
 </body>
 </html>

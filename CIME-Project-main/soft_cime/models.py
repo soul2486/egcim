@@ -12,8 +12,11 @@ from django.contrib.auth.models import User
 #                     CLASSE UNITE DE GESTION                          #
 ########################################################################
 class UG(models.Model):
-     ug = models.PositiveIntegerField(verbose_name='Unité de gestion')
+     ug = models.PositiveIntegerField(verbose_name='N° UG')
      activite = models.CharField(max_length=200, null=True)
+
+     class Meta:
+         verbose_name = "Unité de gestion"
 
      def __str__(self):
           return "UG " + str(self.ug) + " : " + self.activite
@@ -26,6 +29,9 @@ class Sous_secteur(models.Model):
      libelle = models.CharField(max_length=200, verbose_name='Libéllé du sous unité de gestion')
      ug = models.ForeignKey(UG, on_delete=models.CASCADE)
      
+     class Meta:
+         verbose_name = "Sous secteur"
+
      def __str__(self):
           return self.libelle
 
@@ -43,6 +49,9 @@ class Regime_impot(models.Model):
      )
      regime_impot = models.CharField(max_length=20, choices=REGIME_IMPOT, verbose_name="Régime d'imposition")
      
+     class Meta:
+         verbose_name = "Régime d'imposition"
+
      def __str__(self):
           return self.regime_impot
 
@@ -125,6 +134,9 @@ class Part_Impot(models.Model):
      proprietaire = models.CharField(max_length=200)
      taux = models.DecimalField(max_digits=7, decimal_places=6)
      
+     class Meta:
+         verbose_name = "Repartition Impot"
+
      def montant(self, montant):
           if "PAT " in self.nom and montant != 0:
                if 141500 <= montant < 150000:
@@ -182,7 +194,7 @@ class Impot(models.Model):
 #                     CLASSE DECLARATION                               #
 ########################################################################
 class Declaration(models.Model):
-     num_avis = models.PositiveIntegerField()
+     num_avis = models.PositiveBigIntegerField()
      chiffre_affaire = models.PositiveBigIntegerField()
      date_limite = models.DateField()
      contribuable = models.ForeignKey(contribuable, on_delete=models.CASCADE)
@@ -204,7 +216,7 @@ class Declaration(models.Model):
 class Impot_Declare(models.Model):
      declaration = models.ForeignKey(Declaration, on_delete=models.CASCADE)
      impot = models.ForeignKey(Impot, on_delete=models.CASCADE)
-     montant = models.PositiveIntegerField()
+     montant = models.PositiveBigIntegerField()
      statut_payement = models.BooleanField(default=0)
      
      def monnaie(self):
@@ -220,8 +232,8 @@ class Impot_Declare(models.Model):
 ########################################################################
 class Payement(models.Model):
      date = models.DateField(auto_now=True)
-     montant = models.PositiveIntegerField()  
-     num_avis = models.PositiveIntegerField(null=True)   
+     montant = models.PositiveBigIntegerField()  
+     num_avis = models.PositiveBigIntegerField(null=True)   
      personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE)
      contribuable = models.ForeignKey(contribuable, on_delete=models.CASCADE)
      date_virement = models.DateField(null=True)
@@ -257,8 +269,8 @@ class Impot_AMR(models.Model):
      amr = models.ForeignKey(AMR, on_delete=models.CASCADE)   
      impot = models.ForeignKey(Impot, on_delete=models.CASCADE)
      date = models.DateField(auto_now=True)
-     montant = models.PositiveIntegerField()  
-     montant_budg = models.PositiveIntegerField()
+     montant = models.PositiveBigIntegerField()  
+     montant_budg = models.PositiveBigIntegerField()
 
      def monnaie(self, x):
           s = "{:,}".format(self.montant).replace(',', ' ')
@@ -276,7 +288,7 @@ class Projection(models.Model):
      date = models.DateField(auto_now=True)
      personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE)
      contribuable = models.ForeignKey(contribuable, on_delete=models.CASCADE)
-     montant = models.PositiveIntegerField(null=True)  
+     montant = models.PositiveBigIntegerField(null=True)  
      CELLULE = (
           ("GESTION ET SUIVI" , "Gestion et suivi"),
           ("RECOUVREMENT" , "Recouvrement"),
@@ -296,7 +308,7 @@ class Projection_Impot(models.Model):
      date = models.DateField(auto_now=True)
      personnel = models.ForeignKey(Personnel, on_delete=models.CASCADE)
      impot = models.ForeignKey(Impot, on_delete=models.CASCADE)
-     montant = models.PositiveIntegerField(null=True)  
+     montant = models.PositiveBigIntegerField(null=True)  
 
      def montant_monnaie(self):
           s = "{:,}".format(self.montant).replace(',', ' ')

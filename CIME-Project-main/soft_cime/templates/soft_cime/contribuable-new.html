@@ -42,21 +42,21 @@ Nouveau contribuable
                         <div class="row justify-content-between mb-3 ">
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="niu_input">NIU<span class="text-danger"> *</span></label> 
-                                <input type="text" id="niu_input" name="NIU" class="form-control" placeholder="NIU"> 
+                                {{formContrib.NIU}}
                             </div>
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="rs_input">Raison Social<span class="text-danger"> *</span></label> 
-                                <input type="text" id="rs_input" name="raison_social" class="form-control" placeholder="Raison Social"> 
+                                {{formContrib.raison_social}}
                             </div>
                         </div>
                         <div class="row justify-content-between text-left mb-3">
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="phone_input">Téléphone<span class="text-danger"> *</span></label> 
-                                <input type="text" id="phone_input" name="telephone" class="form-control" placeholder="Téléphone"> 
+                                {{formContrib.telephone}}
                             </div>
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="activite_input">Activité<span class="text-danger"> *</span></label> 
-                                <input type="text" id="activite_input" name="activite" class="form-control" placeholder="Activité"> 
+                                {{formContrib.activite}}
                             </div>
                             
                         </div>
@@ -64,39 +64,27 @@ Nouveau contribuable
                 
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                  <label class="form-control-label px-3" for="local_input">Arrondissement<span class="text-danger"> *</span></label> 
-                                <input type="text" id="local_input" name="arrondissement" class="form-control" placeholder="Localisation"> 
-                            </div>
+                                 {{formContrib.arrondissement}}
+                                </div>
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="depart_input">Département<span class="text-danger"> *</span></label> 
-                                <select id="depart_input" name="departement" class="form-control form-select">
-                                    <option value="" disabled selected>Choisissez le département</option>
-                                    {% for departement in departements %}
-                                    <option value="{{departement.departement}}">{{departement.departement}}</option> 
-                                    {% endfor %}
-                                </select>
+                                {{formContrib.departement}}
+
 
                             </div>
                         </div>
                         <div class="row justify-content-between text-left mb-3">
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="ug">Unité de gestion<span class="text-danger"> *</span></label> 
-                                <select id="ug" name="ug" class="form-control form-select" onchange="change_ss()">
-                                    <option value="" disabled selected>Choisissez le UG</option>
-                                    {% for ug in ugs %}
-                                    <option value="{{ug.ug}}">UG {{ug.ug}}</option> 
-                                    {% endfor %}
-                                </select>
+                                {{formContrib.ug}}
+
 
                             </div>
                             
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="sous_secteur">Sous secteur<span class="text-danger"> *</span></label> 
-                                <select id="sous_secteur" name="sous_secteur" class="form-control form-select">
-                                    <option value="" disabled selected>Choisissez le Sous secteur</option>
-                                    {% for sous_secteur in sous_secteurs %}
-                                        <option value="{{sous_secteur.libelle}}" id="{{sous_secteur.ug.ug}} d-none" style="">{{sous_secteur.libelle}}</option> 
-                                    {% endfor %}
-                                </select>
+                                {{formContrib.sous_secteur}}
+
 
                             </div>
                         </div>
@@ -104,12 +92,8 @@ Nouveau contribuable
                         <div class="row justify-content-between text-left mb-3">
                             <div class="form-group col-sm-6 flex-column d-flex"> 
                                 <label class="form-control-label px-3" for="ri_input">Régime d'imposition<span class="text-danger"> *</span></label> 
-                                <select id="ri_input" name="regime_impot" class="form-control form-select" placeholder="Raison Social">
-                                    <option value="" disabled selected>Choisissez un régime</option>
-                                    {% for regime in regimes_impots %}
-                                    <option value="{{regime.regime_impot}}">{{regime.regime_impot}}</option> 
-                                    {% endfor %}
-                                </select>
+                                {{formContrib.regime_impot}}
+
                             </div>
 
                             

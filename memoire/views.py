@@ -131,7 +131,7 @@ def depot(request):
     return render(request,'depot.html', context)
 def consulter(request):
     memoires = memoire.objects.order_by('-date_creation')[:12]
-    comons_tag = memoire.mot_cle.most_common()
+    # comons_tag = memoire.mot_cle.most_common()
     f = memoireFilter(request.GET, queryset=memoire.objects.order_by('-date_creation'))
     formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires]
     paginator = Paginator(f.qs,12)
@@ -139,13 +139,24 @@ def consulter(request):
     page_object = paginator.get_page(page_number)
     context = {'memoires':page_object,'filter':f}
     return render(request,'consulter.html', context)
-def detail(request,  Slug , id_memoire):
+def consulter2(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    memoires = memoire.objects.order_by('-date_creation')[:12]
+    comons_tag = memoire.mot_cle.most_common()
+    f = memoireFilter(request.GET, queryset=memoire.objects.filter(mot_cle=tag))
+    formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires]
+    paginator = Paginator(f.qs,12)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+    context = {'memoires':page_object,'filter':f}
+    return render(request,'consulter.html', context)
+def detail(request, id_memoire,  slug = None):
     memoires = memoire.objects.get(pk = id_memoire)
     memoires_tags_ids = memoire.mot_cle.values_list('id', flat=True)
-    similar_memoire = memoire.objects.filter(mot_cle__in = memoires_tags_ids).exclude(id=memoires.id)
-    similar_memoire = similar_memoire.annotate(same_mot_cle= Count('mot_cle')).order_by('same_mot_cle')[:3]
-    # tag = None
-    # memoirestag = None
+    similar_memoire = memoire.objects.filter(mot_cle__in=memoires_tags_ids).exclude(id=memoires.id)
+    similar_memoire = similar_memoire.annotate(same_mot_cle= Count('mot_cle')).order_by('same_mot_cle')[:2]
+    tag = None
+    memoirestag = None
     if slug:
         tag = get_object_or_404(Tag, slug=slug)
         memoirestag = memoire.objects.filter(mot_cle__in = [tag][:3])
@@ -153,19 +164,19 @@ def detail(request,  Slug , id_memoire):
         # memoires_simi = memoire.objects.filter(mot_cle = mot_clee )[:12]
         # formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires_simi]
         context = {'memoires':memoires, 'memoirestag':memoirestag, 'tag':tag, 'similar_memoire':similar_memoire}
-    # else:
-    #     context = {'memoires':memoires, 'memoirestag':memoirestag, 'tag':tag, 'similar_memoire':similar_memoire}
+    else:
+        context = {'memoires':memoires, 'memoirestag':memoirestag, 'tag':tag, 'similar_memoire':similar_memoire}
     return render(request, 'detail2.html', context)
 def getparcours(request, id_parcours):
     parc = parcours.objects.get(parcours=id_parcours)
     memoires = memoire.objects.filter(etudiant__parcours__parcours= parc)[:12]
-    comons_tag = memoire.tags.most_common()[:10]
+    # comons_tag = memoire.tags.most_common()[:10]
     f = memoireFilter(request.GET, queryset= memoire.objects.filter(etudiant__parcours__parcours= parc))
     formated_memoires = ["<li>{}</li>".format(memoire.titre) for memoire in memoires]
     paginator = Paginator(f.qs,12)
     page_number = request.GET.get('page')
     page_object = paginator.get_page(page_number)
-    context = {'memoires':page_object,'filter':f, 'comons_tag':comons_tag}
+    context = {'memoires':page_object,'filter':f,}
     return render(request,'consulter.html', context)
 def load_doc (request, memoire_id):
     id = int(memoire_id)
@@ -329,33 +340,34 @@ def search (request):
     }
     return render(request, 'search_results.html', context)
 def recherche(request):
-    search = request.GET.get('search')
+    search = request.GET.get('search2')
     if search:
         vector = SearchVector('titre','mot_cle', 'resume', 'etudiant__nom', 'etudiant')
         query = SearchQuery(search)
         # memoires = memoire.objects.annotate(search = vector).filter(search = query)
-        memoires = memoire.objects.annotate(rank = SearchRank(vector, query)).filter(rank__gte = 0.3).order_by('-rank')
-        # memoires = memoire.objects.annotate(similarity=Greatest(
-        #                                                     TrigramSimilarity('titre', search),
-        #                                                     TrigramSimilarity('etudiant__nom', search),
-        #                                                     TrigramSimilarity('etudiant__prenom', search),
-        #                                                     TrigramSimilarity('resume', search),
-        #                                                     TrigramSimilarity('mot_cle', search),
-        #                                                     TrigramSimilarity('etudiant__enseignant__nom_ens', search),
-        #                                                     TrigramSimilarity('soutenance__mention_sout', search),
-        #                                                     TrigramSimilarity('etudiant__stage__entreprise__nom_ent', search),
-        #                                                     TrigramSimilarity('etudiant__parcours__parcours', search),)).filter(similarity__gte= 0.3).order_by('-similarity')
+        # memoires = memoire.objects.annotate(rank = SearchRank(vector, query)).filter(rank__gte = 0.3).order_by('-rank')
+        memoires = memoire.objects.annotate(similarity=Greatest(
+                                                            TrigramSimilarity('titre', search),
+                                                            TrigramSimilarity('etudiant__nom', search),
+                                                            TrigramSimilarity('etudiant__prenom', search),
+                                                            TrigramSimilarity('resume', search),
+                                                            # TrigramSimilarity('mot_cle', search),
+                                                            # TrigramSimilarity('etudiant__enseignant__nom_ens', search),
+                                                            TrigramSimilarity('soutenance__mention_sout', search),
+                                                            TrigramSimilarity('etudiant__stage__entreprise__nom_ent', search),
+                                                            TrigramSimilarity('etudiant__parcours__parcours', search),
+                                                            )).filter(similarity__gte= 0.3).order_by('-similarity')
 
         # memoires = memoire.objects.filter(Q(titre__icontains = search)|
         #                                   Q(mot_cle__icontains = search)|
         #                                   Q(annee_academique__icontains = search)|
         #                                   Q(resume__icontains = search)|
         #                                   Q(etudiant__nom__icontains = search))
-        memoires =  memoire.objects.filter(Q(titre__search = search)|
-                                           Q(mot_cle__search = search)|                                        
-                                           Q(resume__search = search)|                                        
-                                           Q(etudiant__prenom__search = search)|                                        
-                                           Q(etudiant__nom__search = search))
+        # memoires =  memoire.objects.filter(Q(titre__search=search)|
+        #                                    Q(mot_cle__search = search)|                                        
+        #                                    Q(resume__search = search)|                                        
+        #                                    Q(etudiant__prenom__search = search)|                                        
+        #                                    Q(etudiant__nom__search = search))
         results_number = memoires.count()
         message = f'{results_number} resultats :'
         if results_number <= 1:

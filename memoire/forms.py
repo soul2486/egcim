@@ -1,6 +1,8 @@
 from dataclasses import field, fields
 from pyexpat import model
 from time import strftime
+# from django_select2 import Select2Widget
+from django_select2 import *
 from django.forms import DateTimeInput, TextInput, Textarea, DateInput, FileInput, NumberInput, ModelForm, widgets
 from django import forms
 from .models import *
@@ -12,6 +14,7 @@ PARCOURS_CHOICES = [('parcours1','parcours1'),('parcours2','parcours2'),('parcou
 #         if value:
 #             option['attrs']['data-parcours'] = value.instance.parcours
 #         return option
+
 class etudiantForm(forms.ModelForm):
     class Meta:
         model = etudiant
@@ -20,7 +23,7 @@ class etudiantForm(forms.ModelForm):
             'nom':forms.TextInput(attrs={'class':'form-control'}),
             'prenom':forms.TextInput(attrs={'class':'form-control'}),
             'matricule':forms.TextInput(attrs={'class':'form-control'}),
-            'parcours':forms.Select(attrs={'class':'form-control'}),
+            'parcours':forms.Select(attrs={'class':'form-control'})
             # 'enseignant':forms.Select(attrs={'class':'form-control'}),
             # 'stage':forms.Select(attrs={'class':'form-control'}),
         }
