@@ -29,11 +29,7 @@ urlpatterns = [
     path('recette/new_payement', new_payement, name='new_payement'),
     path('recette/paye_non_declare', payement_non_declare, name='paye_non_declare'),
     
-    path('statistiques/1', stats1, name='stats1'),
-    path('statistiques/1/excelStats1', excelStats1, name='excelStats1'),
-    path('statistiques/2', stat_perf_gestion, name='stats2'),
-    path('statistiques/2/excelStats2', excelStats2, name='excelStats2'),
-    path('statistiques/3', stat_perf_recette, name='stat_perf_recette'),
+   
     
     path('amr/new', new_amr, name='new_amr'),
     path('amr/new/<int:idAmr>', new_impot_amr, name='new_impot_amr'),
@@ -44,6 +40,11 @@ urlpatterns = [
     path('amr/excel_amr/<int:idAmr>', excel_amr, name='excel_amr'),
     
     
+    path('statistiques/1', stats1, name='stats1'),
+    path('statistiques/1/excelStats1', excelStats1, name='excelStats1'),
+    path('statistiques/2', stat_perf_gestion, name='stats2'),
+    path('statistiques/2/excelStats2/<int:m>/<int:y>', excelStats2, name='excelStats2'),
+    path('statistiques/3', stat_perf_recette, name='stat_perf_recette'),
     path('statistiques/stats_etats', stats_etats, name='stats_etats'),
     path('statistiques/stats_consolide_irc/<int:m>/<int:y>', stats_consolide_irc, name='stats_consolide_irc'),
     path('statistiques/stats_consolide_retc/<int:m>/<int:y>', stats_consolide_retc, name='stats_consolide_retc'),

@@ -1376,7 +1376,7 @@ def stat_perf_gestion(request):
 
 # Excel stats 2
 @login_required
-def excelStats2(request):
+def excelStats2(request,m, y):
     wbl=load_workbook("soft_cime/static/doc/statistiques.xlsx")
     wb= Workbook()
     ws = wbl["Evaluation"]
@@ -1449,7 +1449,7 @@ def excelStats2(request):
     # set_border(ws, plage)
     
     # impots_declare = Impot_Declare.objects.filter(declaration in (Declaration.objects.filter(date_limite__month = today.month-1) &  Declaration.objects.filter(date_limite__year = today.year)))
-    impots_declare = Impot_Declare.objects.all()
+    impots_declare = Impot_Declare.objects.filter(declaration__in = Declaration.objects.filter(date_limite__month = m).filter(date_limite__year = y))
 
     for impot_dec in impots_declare:
         ref = str(dico[impot_dec.declaration.contribuable.ug.ug]) + str(dico[impot_dec.impot.impot])
@@ -1462,10 +1462,10 @@ def excelStats2(request):
         # ws[dico["T_impot"]+""+dico[impot_dec.impot.impot]]="=SUM("
     
     
-    wbl.save(os.path.expanduser("~/Downloads/stats_performance.xlsx"))
-    os.popen(os.path.expanduser("~/Downloads/stats_performance.xlsx"))
+    wbl.save(os.path.expanduser("~/Downloads/stats_performance_-_" + mois[m] + " " + str(y) +".xlsx"))
+    os.popen(os.path.expanduser("~/Downloads/stats_performance_-_" + mois[m] + " " + str(y) +".xlsx"))
     
-    return redirect('stats2')
+    return redirect('stats_etats')
 
 @login_required
 def stat_perf_recette(request):
@@ -1662,9 +1662,9 @@ def stats_consolide_irc(request, m, y):
     # TDL
     j=chr(ord(j) - 1)
     i=i+1
-    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'] + Part_Impot.objects.get(nom='PAT TDL').montant((zeroifnone(Impot.objects.get(impot='PATENTE').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'])))
+    ws[j+str(i)] = zeroifnone(Impot.objects.get(impot='TDL').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum']) + Part_Impot.objects.get(nom='PAT TDL').montant((zeroifnone(Impot.objects.get(impot='PATENTE').impot_declare_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum'])))
     j=chr(ord(j) + 1)
-    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_amr_set.filter(declaration__in = declaration).aggregate(Sum('montant'))['montant__sum']
+    ws[j+str(i)] = Impot.objects.get(impot='TDL').impot_amr_set.filter(amr__in = amrs).aggregate(Sum('montant'))['montant__sum']
     
     
     
@@ -1739,7 +1739,7 @@ def stats_consolide_irc(request, m, y):
     ws[j+str(i)] = Impot.objects.get(impot='FNE').impot_amr_set.filter(Q(date__month = mois_stats) and Q(date__year = an_stats)).aggregate(Sum('montant'))['montant__sum']
     
     
-    wb.save(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + ".xlsx"))
+    wb.save(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + " " + str(an_stats) +".xlsx"))
     os.popen(os.path.expanduser("~/Downloads/Statistiques Consolidée Impôts sur le revenu - " + mois[mois_stats] + " " + str(an_stats) +  ".xlsx"))
     
     return redirect('stats_etats')

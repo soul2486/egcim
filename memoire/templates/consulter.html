@@ -118,6 +118,7 @@
 									</table>
 									</div> {% endcomment %}
 							{% for memoire in memoires %}
+								
 								<div class="col-6  col-md-4 col-xl-3 col-xxl-2">
 									<div class="app-card app-card-doc shadow-sm h-100">
 										<div class="app-card-thumb-holder">
@@ -202,10 +203,12 @@
 		
 										</div>
 										<!--//app-card-body-->
-		
+										
 									</div>
 									<!--//app-card-->
 								</div>
+								{%empty%}
+									<div class="h1 d-flex justify-content-center">aucun resultats pour ce filtre</div>
 								{% endfor%}
 								<!--//col-->
 								<!--  -->
