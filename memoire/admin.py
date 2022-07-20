@@ -3,7 +3,7 @@ from .models import etudiant, memoire, soutenance, enseignant, stage, entreprise
 
 # Register your models here.
 class etudiantAdmin(admin.ModelAdmin): 
-  list_display =['nom', 'prenom', 'matricule'] 
+  list_display =['nom', 'prenom', 'matricule']
 
 class memoireAdmin(admin.ModelAdmin): 
   list_display =['titre', 'memoire_doc', 'etudiant',] 

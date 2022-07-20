@@ -27,6 +27,7 @@ urlpatterns = [
     path('consulter/',consulter, name = "consulter"),
     path('tag/(?P<slug>[-a-zA-Z0-9_]+)\\Z',consulter2, name = "tagget"),
     re_path(r'^(?P<id_memoire>[0-9]+)/$', detail, name='detail'),
+    # path("select2/", include("django_select2.urls")),
     path('modif_ent/<int:id_entreprise>/', modif_ent, name='modif_ent'),
     path('parcours/<str:id_parcours>/', getparcours, name='parcours'),
     path('delete_ent/<int:id_entreprise>/', delete_ent, name='delete_ent'),

@@ -267,5 +267,16 @@
 			{% comment %}
 		</div>
 		<!--//app-wrapper--> {% endcomment %}
+		<script>
+			$(document).ready(function() {
+			  {% comment %} $('#id_parcours').select2(); {% endcomment %}
+			  $('#id_etudiant').select2({
+				width:'260px'
+			  });
+			  $('#id_etudiant__stage__entreprise').select2({
+				width:'260px'
+			  });
+			})
+			</script>
 
 {% endblock %}

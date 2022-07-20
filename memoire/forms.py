@@ -1,12 +1,13 @@
 from dataclasses import field, fields
-from pyexpat import model
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from time import strftime
-# from django_select2 import Select2Widget
-from django_select2 import *
+from django_select2.forms import ModelSelect2Widget
+# from django_select2 import *
 from django.forms import DateTimeInput, TextInput, Textarea, DateInput, FileInput, NumberInput, ModelForm, widgets
 from django import forms
 from .models import *
-PARCOURS_CHOICES = [('parcours1','parcours1'),('parcours2','parcours2'),('parcours3','parcours3'),('parcours4','parcours4')]
+
+# PARCOURS_CHOICES = [('parcours1','parcours1'),('parcours2','parcours2'),('parcours3','parcours3'),('parcours4','parcours4')]
 # parcour = parcours()
 # class parcoursSelect(forms.Select):
 #     def create_option(self, parcours, value, label, selected, index, subindex=None, attrs=None):
@@ -14,6 +15,9 @@ PARCOURS_CHOICES = [('parcours1','parcours1'),('parcours2','parcours2'),('parcou
 #         if value:
 #             option['attrs']['data-parcours'] = value.instance.parcours
 #         return option
+
+# class parcourswidget(s2forms.ModelSelect2Widget):
+#     search_fields = ["parcours__istartswith"]
 
 class etudiantForm(forms.ModelForm):
     class Meta:
@@ -23,7 +27,7 @@ class etudiantForm(forms.ModelForm):
             'nom':forms.TextInput(attrs={'class':'form-control'}),
             'prenom':forms.TextInput(attrs={'class':'form-control'}),
             'matricule':forms.TextInput(attrs={'class':'form-control'}),
-            'parcours':forms.Select(attrs={'class':'form-control'})
+            'parcours':forms.Select(attrs = {'class':'form-control'})
             # 'enseignant':forms.Select(attrs={'class':'form-control'}),
             # 'stage':forms.Select(attrs={'class':'form-control'}),
         }

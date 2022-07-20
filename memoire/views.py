@@ -321,6 +321,7 @@ def search (request):
                                                         TrigramSimilarity('titre', search),
                                                         TrigramSimilarity('etudiant__nom', search),
                                                         TrigramSimilarity('etudiant__prenom', search),
+                                                        # TrigramSimilarity('mot_cle__name', search),
                                                         TrigramSimilarity('etudiant__parcours__parcours', search),)).filter(similarity__gte= 0.1).order_by('-similarity')
 
     # memoires = memoire.objects.filter(Q(titre__icontains = search)|
@@ -353,7 +354,12 @@ def recherche(request):
                                                             TrigramSimilarity('resume', search),
                                                             # TrigramSimilarity('mot_cle', search),
                                                             # TrigramSimilarity('etudiant__enseignant__nom_ens', search),
-                                                            TrigramSimilarity('soutenance__mention_sout', search),
+                                                            TrigramSimilarity('soutenance__jury__encadreur__nom_ens', search),
+                                                            TrigramSimilarity('soutenance__jury__encadreur__prenom_ens', search),
+                                                            TrigramSimilarity('soutenance__jury__president__nom_ens', search),
+                                                            TrigramSimilarity('soutenance__jury__examinateur__nom_ens', search),
+                                                            TrigramSimilarity('soutenance__jury__president__prenom_ens', search),
+                                                            TrigramSimilarity('soutenance__jury__examinateur__prenom_ens', search),
                                                             TrigramSimilarity('etudiant__stage__entreprise__nom_ent', search),
                                                             TrigramSimilarity('etudiant__parcours__parcours', search),
                                                             )).filter(similarity__gte= 0.3).order_by('-similarity')

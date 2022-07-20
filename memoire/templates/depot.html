@@ -222,7 +222,7 @@
                             </div>
                           </div>
                       </div>
-                      <div class="row ">
+                      <div class="row pt-2">
                         <div class="col-xl-3 col-md-3">
                           <!-- Email input -->
                           <div class="form-outline">
@@ -429,7 +429,24 @@
   </div>
 </div>
 
+<script>
+  $(document).ready(function() {
+    {% comment %} $('#id_parcours').select2(); {% endcomment %}
+    $('#id_president').select2({
+      width:'260px'
+    });
+    $('#id_examinateur').select2({
+      width:'260px'
+    });
+    $('#id_entreprise').select2({
+      width:'500px'
+    });
+    $('#id_encadreur').select2({
+      width:'260px'
+    });
 
+  });
+  </script>
 <!-- The Modal ajouter_enseignant -->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 

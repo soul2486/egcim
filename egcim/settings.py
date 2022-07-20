@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-7yag_vu8qalsgwlvpt2$p#4cr*u_)ezealpr6cgjy=h!1sc#4n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.46']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -103,6 +103,7 @@ CACHES = {
 # Set the cache backend to select2
 SELECT2_CACHE_BACKEND = 'select2'
 
+JS = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js'
 
 CRISPY_TEMPLATE_PACK = 'uni_form'
 
@@ -158,6 +159,7 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
+        
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
